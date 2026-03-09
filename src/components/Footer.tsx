@@ -1,4 +1,5 @@
 // Icon imports removed because icons are currently commented out in the markup.
+import { Facebook } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -39,20 +40,17 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* <div>
-            <h3 className="text-white font-semibold mb-4">Connect With Us</h3>
-            <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
-                <Twitter className="w-5 h-5 text-gray-300" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-red-600 rounded-lg flex items-center justify-center transition-colors">
-                <Youtube className="w-5 h-5 text-gray-300" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-lg flex items-center justify-center transition-colors">
-                <Twitch className="w-5 h-5 text-gray-300" />
-              </a>
-            </div>
-          </div> */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Contact Us</h3>
+            <ul className="space-y-2">
+              <li>
+                <a href="https://www.facebook.com/profile.php?id=61586728110774&locale=ar_AR" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors text-sm flex items-center">
+                  <Facebook className="w-4 h-4 mr-2" />
+                  Facebook
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
