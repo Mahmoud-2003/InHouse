@@ -1,5 +1,5 @@
-// Icon imports removed because icons are currently commented out in the markup.
-import { Facebook } from 'lucide-react';
+// Icon imports from react-icons
+import { FaDiscord, FaFacebook } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -23,8 +23,15 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="https://discord.gg/dCjJ6fFH4g" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  Discord Server
+                <a href="https://discord.gg/dCjJ6fFH4g" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors text-sm flex items-center">
+                  <FaDiscord className="w-4 h-4 mr-2" />
+                  Discord
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/profile.php?id=61586728110774&locale=ar_AR" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors text-sm flex items-center">
+                  <FaFacebook className="w-4 h-4 mr-2" />
+                  Facebook
                 </a>
               </li>
               {/* <li>
@@ -40,7 +47,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          {/* <div>
             <h3 className="text-white font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-2">
               <li>
@@ -50,7 +57,7 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
