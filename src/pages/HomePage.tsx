@@ -1,193 +1,194 @@
-import { Trophy, Users, Target, ArrowRight, ExternalLink, Calendar } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Trophy, Users, Target, ArrowRight, ExternalLink, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, onValue } from 'firebase/database';
+
+// إعدادات فايربيز (تأكد من مطابقتها لمشروعك)
+const firebaseConfig = {
+  apiKey: "AIzaSyAA-vBOTLjEfzjZ3PqzxWecc00_cho8Jvo",
+  authDomain: "inhouseproject-facd0.firebaseapp.com",
+  databaseURL: "https://inhouseproject-facd0-default-rtdb.firebaseio.com",
+  projectId: "inhouseproject-facd0",
+  storageBucket: "inhouseproject-facd0.firebasestorage.app",
+  messagingSenderId: "962024767549",
+  appId: "1:962024767549:web:199c2db19e117da19e2a54"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
 }
 
 export default function HomePage({ onNavigate }: HomePageProps) {
+  const [tournament, setTournament] = useState<any>(null);
+
+  useEffect(() => {
+    const tournamentRef = ref(db, 'tournament');
+    const unsubscribe = onValue(tournamentRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) setTournament(data);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (!tournament) return (
+    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500"></div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gray-950">
-      {/* Hero Section */}
+      
+      {/* ---------------- Hero Section ---------------- */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-red-900/20"></div>
         <div className="absolute inset-0 bg-[url('https://img.lightshot.app/M554D-EUQiil2yZ99SHVMQ.jpg')] bg-cover bg-center opacity-20"></div>
-
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h1 className="text-5xl sm:text-7xl font-bold text-white mb-6 leading-tight">
             InHouse Community
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-red-400 mt-2">
               League & Valorant
             </span>
           </h1>
-          <p className="text-xl sm:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Join competitive InHouse matches, climb the tier system, and prove your skills in organized 5v5 games
+          <p className="text-xl sm:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed italic">
+            "Where legends are born and skills are proven"
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://discord.gg/dCjJ6fFH4g"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-xl hover:shadow-2xl transform hover:scale-105"
-            >
-              Join Discord Server
-            </a>
-            <button
-              onClick={() => onNavigate('inhouse')}
-              className="px-8 py-4 bg-gray-800 text-white rounded-lg font-semibold text-lg hover:bg-gray-700 transition-all shadow-xl flex items-center justify-center gap-2"
-            >
-              Learn More
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* ---------------- Tournament Section ---------------- */}
       <section className="py-20 bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-blue-500 transition-all">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-6">
-                <Trophy className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Competitive Matches</h3>
-              <p className="text-gray-400 leading-relaxed">
-                Participate in organized InHouse 5v5 matches with balanced teams and fair competition. Every game counts toward your ranking.
-              </p>
-            </div>
-
-            <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-purple-500 transition-all">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-6">
-                <Target className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Tier System</h3>
-              <p className="text-gray-400 leading-relaxed">
-                Progress through our tier system based on your in-game rank. Tier 1 for Diamond+ and Tier 2 for Gold to Emerald players.
-              </p>
-            </div>
-
-            <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-red-500 transition-all">
-              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-6">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Active Community</h3>
-              <p className="text-gray-400 leading-relaxed">
-                Join a thriving community of League of Legends and Valorant players. Make friends, form teams, and compete together.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Announcement Section */}
-      <section className="py-20 bg-gray-900">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden flex flex-col xl:flex-row shadow-2xl">
+          <div className="bg-gray-800 rounded-3xl border border-gray-700 overflow-hidden flex flex-col xl:flex-row shadow-2xl">
             
-            {/* Image Banner */}
-            <div className="xl:w-2/5 h-64 xl:h-auto relative">
+            {/* Tournament Image Banner */}
+            <div className="xl:w-2/5 h-80 xl:h-auto relative">
               <div className="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent xl:bg-gradient-to-r z-10"></div>
-              <img
-                src="https://cdn.discordapp.com/attachments/1477407602802561194/1491179984235135097/April_Fools_Championship_4_1.png?ex=69d6c115&is=69d56f95&hm=9ae51cd11909a9614a16dbbbb90d236670f5d9ba27cad6d1554b3d7e881763bb&"
-                alt="Tournament Announcement"
-                className="w-full h-full object-cover"
+              <img 
+                src={tournament.imageUrl} 
+                className={`w-full h-full object-cover transition-all duration-1000 ${tournament.status === 'ended' ? 'grayscale opacity-40 scale-110' : 'scale-100'}`} 
+                alt="Tournament Banner"
               />
             </div>
 
-            {/* Content */}
-            <div className="xl:w-3/5 p-8 md:p-10 flex flex-col justify-center relative z-20">
+            {/* Content Area */}
+            <div className="xl:w-3/5 p-8 md:p-12 flex flex-col justify-center">
               
-              {/* Badges: Announcement & Date */}
-              <div className="flex flex-wrap items-center gap-3 mb-6">
-                <div className="inline-block px-4 py-1.5 bg-red-500/20 text-red-400 rounded-full text-sm font-bold tracking-wide border border-red-500/30">
-                  📢 TOURNAMENT ANNOUNCEMENT
-                </div>
-                <div className="flex items-center gap-2 px-4 py-1.5 bg-blue-500/20 text-blue-400 rounded-full text-sm font-bold tracking-wide border border-blue-500/30">
-                  <Calendar className="w-4 h-4" />
-                  14 April
+              {/* Badges */}
+              <div className="flex flex-wrap items-center gap-3 mb-8">
+                {tournament.status === 'upcoming' && (
+                  <div className="px-4 py-1.5 bg-blue-500/10 text-blue-400 rounded-full text-xs font-black tracking-widest border border-blue-500/20">📢 UPCOMING</div>
+                )}
+                {tournament.status === 'started' && (
+                  <div className="px-4 py-1.5 bg-green-500/10 text-green-400 rounded-full text-xs font-black tracking-widest border border-green-500/20 animate-pulse">● LIVE</div>
+                )}
+                {tournament.status === 'ended' && (
+                  <div className="px-4 py-1.5 bg-red-500/10 text-red-400 rounded-full text-xs font-black tracking-widest border border-red-500/20">FINISHED</div>
+                )}
+                <div className="flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-gray-400 rounded-full text-xs font-bold border border-gray-700">
+                  <Calendar className="w-4 h-4" /> {tournament.date}
                 </div>
               </div>
               
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-                Summoner’s Rift Championship
-              </h2>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-10 leading-tight">{tournament.title}</h2>
 
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                Join us for a competitive League of Legends tournament where strategy, coordination, and mechanical skill determine who rises to the top. Gather your team and compete against strong opponents!
-              </p>
+              {/* Dynamic Content Switching */}
+              {tournament.status === 'ended' ? (
+                /* --- WINNERS PODIUM (ظهرت لأن الحالة ended) --- */
+                <div className="mb-10 space-y-4">
+                   <h3 className="text-xl font-bold text-gray-400 mb-6 flex items-center gap-2 uppercase tracking-widest">🏆 Winners Podium</h3>
+                   
+                   {/* Gold */}
+                   <div className="bg-gradient-to-r from-yellow-600/20 to-gray-800 p-5 rounded-2xl border border-yellow-500/30 flex items-center gap-5">
+                      <div className="text-4xl">🥇</div>
+                      <div>
+                        <p className="text-yellow-500 text-[10px] font-bold uppercase tracking-tighter">Champion</p>
+                        <p className="text-xl font-black text-white italic">{tournament.winners?.first || "TBD"}</p>
+                      </div>
+                   </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                {/* Format List */}
-                <div className="bg-gray-900/50 p-5 rounded-xl border border-gray-700/50">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                    🏆 Format
-                  </h3>
-                  <ul className="space-y-2 text-gray-300">
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> 5v5 Teams</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Single Elimination Bracket</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Best of 1 (Bo1) matches</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Grand Final: Best of 3 (Bo3)</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Server: EU WEST</li>
-                  </ul>
+                   {/* Silver & Bronze Row */}
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="bg-gray-700/20 p-4 rounded-2xl border border-gray-500/20 flex items-center gap-4">
+                        <div className="text-2xl">🥈</div>
+                        <div>
+                          <p className="text-gray-400 text-[10px] font-bold uppercase">2nd Place</p>
+                          <p className="text-lg font-bold text-white">{tournament.winners?.second || "TBD"}</p>
+                        </div>
+                      </div>
+                      <div className="bg-orange-900/10 p-4 rounded-2xl border border-orange-700/20 flex items-center gap-4">
+                        <div className="text-2xl">🥉</div>
+                        <div>
+                          <p className="text-orange-600 text-[10px] font-bold uppercase">3rd Place</p>
+                          <p className="text-lg font-bold text-white">{tournament.winners?.third || "TBD"}</p>
+                        </div>
+                      </div>
+                   </div>
                 </div>
-
-                {/* Rules List */}
-                <div className="bg-gray-900/50 p-5 rounded-xl border border-gray-700/50">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                    📋 Rules
-                  </h3>
-                  <ul className="space-y-2 text-gray-300">
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-purple-500"></div> Official personal accounts only</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-purple-500"></div> Sportsmanship is mandatory</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-purple-500"></div> 15 min early check-in required</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-purple-500"></div> Prompt match result reporting</li>
-                  </ul>
+              ) : (
+                /* --- RULES & FORMAT (تظهر فقط لو البطولة نشطة) --- */
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-black text-blue-400 uppercase tracking-widest">🏆 Format</h3>
+                    <ul className="space-y-2">
+                      {tournament.format?.map((f: string, i: number) => (
+                        <li key={i} className="text-gray-400 text-sm flex items-center gap-2">
+                          <div className="w-1 h-1 bg-blue-500 rounded-full" /> {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-black text-purple-400 uppercase tracking-widest">📋 Rules</h3>
+                    <ul className="space-y-2">
+                      {tournament.rules?.map((r: string, i: number) => (
+                        <li key={i} className="text-gray-400 text-sm flex items-center gap-2">
+                          <div className="w-1 h-1 bg-purple-500 rounded-full" /> {r}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
+              )}
+
+              {/* Prize Pool Row */}
+              <div className="mb-10 border-t border-gray-700/50 pt-8">
+                 <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <p className="text-[10px] font-bold text-gray-500 uppercase mb-1">1st Prize</p>
+                      <p className="text-white text-xs font-black">{tournament.prizes?.first}</p>
+                    </div>
+                    <div className="text-center border-x border-gray-700/50">
+                      <p className="text-[10px] font-bold text-gray-500 uppercase mb-1">2nd Prize</p>
+                      <p className="text-white text-xs font-black">{tournament.prizes?.second}</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-[10px] font-bold text-gray-500 uppercase mb-1">3rd Prize</p>
+                      <p className="text-white text-xs font-black">{tournament.prizes?.third}</p>
+                    </div>
+                 </div>
               </div>
 
-              {/* Prizes Section */}
-              <div className="mb-8">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  🎁 Prize Pool
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="bg-gradient-to-br from-yellow-900/40 to-gray-900 border border-yellow-700/50 p-4 rounded-xl flex flex-col items-center justify-center text-center">
-                    <span className="text-3xl mb-2">🥇</span>
-                    <span className="text-white font-bold block mb-1">1st Place</span>
-                    <span className="text-yellow-400 text-sm font-semibold">20 CHEST & KEY</span>
-                  </div>
-                  <div className="bg-gradient-to-br from-gray-700/40 to-gray-900 border border-gray-500/50 p-4 rounded-xl flex flex-col items-center justify-center text-center">
-                    <span className="text-3xl mb-2">🥈</span>
-                    <span className="text-white font-bold block mb-1">2nd Place</span>
-                    <span className="text-gray-300 text-sm font-semibold">15 CHEST & KEY</span>
-                  </div>
-                  <div className="bg-gradient-to-br from-orange-900/40 to-gray-900 border border-orange-700/50 p-4 rounded-xl flex flex-col items-center justify-center text-center">
-                    <span className="text-3xl mb-2">🥉</span>
-                    <span className="text-white font-bold block mb-1">3rd Place</span>
-                    <span className="text-orange-400 text-sm font-semibold">10 CHEST & KEY</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* CTA Link */}
-              <div>
-                <a
-                  href="https://battlefy.com/league-of-inhouses/lie-of-april/69d53bddade317001ab975f2/info?infoTab=details"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors shadow-lg hover:shadow-red-900/20"
-                >
-                  Register on Battlefy
-                  <ExternalLink className="w-5 h-5 ml-2" />
+              {/* CTA Button */}
+              {tournament.status !== 'ended' ? (
+                <a href="https://battlefy.com/..." target="_blank" className="group flex items-center justify-center gap-3 w-full py-5 bg-red-600 hover:bg-red-700 text-white font-black rounded-2xl transition-all shadow-xl shadow-red-900/30">
+                  REGISTER ON BATTLEFY <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </a>
-              </div>
+              ) : (
+                <div className="w-full py-5 bg-gray-900 text-gray-600 text-center font-black rounded-2xl border border-gray-800 tracking-widest">
+                  TOURNAMENT CLOSED
+                </div>
+              )}
 
             </div>
           </div>
         </div>
       </section>
 
-      {/* Choose Game Section */}
+       {/* Choose Game Section */}
       <section className="py-20 bg-gray-950">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-white text-center mb-16">
@@ -237,7 +238,6 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
         </div>
       </section>
-      
     </div>
   );
 }
