@@ -149,6 +149,57 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
         </div>
       </section>
+       {/* Choose Game Section */}
+      <section className="py-20 bg-gray-950">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-white text-center mb-16">
+            Choose Your Game
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div
+              onClick={() => onNavigate('lol')}
+              className="relative group cursor-pointer overflow-hidden rounded-xl border-2 border-gray-800 hover:border-blue-500 transition-all"
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10"></div>
+              <img
+                src="https://img.lightshot.app/zbmOUtzaROeDjNm5QaImsA.png"
+                alt="League of Legends"
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
+                <h3 className="text-3xl font-bold text-white mb-2">League of Legends</h3>
+                <p className="text-gray-300 mb-4">5v5 competitive matches on Summoner's Rift</p>
+                <div className="flex items-center text-blue-400 font-semibold group-hover:text-blue-300 transition-colors">
+                  Learn More
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                </div>
+              </div>
+            </div>
+
+            <div
+              onClick={() => onNavigate('valorant')}
+              className="relative group cursor-pointer overflow-hidden rounded-xl border-2 border-gray-800 hover:border-red-500 transition-all"
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10"></div>
+              <img
+                src="https://img.lightshot.app/Tdva4daYQpyNsS4yySiBYw.png" style ={{width: '100%', height: '20rem', objectFit: 'cover'}}
+                src="https://img.lightshot.app/Tdva4daYQpyNsS4yySiBYw.png" 
+                style={{width: '100%', height: '20rem', objectFit: 'cover'}}
+                alt="Valorant"
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-300" 
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
+                <h3 className="text-3xl font-bold text-white mb-2">Valorant</h3>
+                <p className="text-gray-300 mb-4">Tactical 5v5 character-based shooter</p>
+                <div className="flex items-center text-red-400 font-semibold group-hover:text-red-300 transition-colors">
+                  Learn More
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
