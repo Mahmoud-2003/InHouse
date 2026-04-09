@@ -34,7 +34,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
   if (!tournament) return (
     <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500"></div>
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
     </div>
   );
 
@@ -51,8 +51,8 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               League & Valorant
             </span>
           </h1>
-          <p className="text-xl sm:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-            Join competitive InHouse matches, climb the tier system, and prove your skills in organized 5v5 games
+          <p className="text-xl sm:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto italic">
+            "Proven mechanical skill meets organized strategy"
           </p>
         </div>
       </section>
@@ -63,7 +63,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           <div className="bg-gray-800 rounded-3xl border border-gray-700 overflow-hidden flex flex-col xl:flex-row shadow-2xl">
             
             {/* Image Banner */}
-            <div className="xl:w-2/5 h-80 xl:h-auto relative">
+            <div className="xl:w-2/5 h-80 xl:h-auto relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent xl:bg-gradient-to-r z-10"></div>
               <img 
                 src={tournament.imageUrl} 
@@ -72,78 +72,78 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               />
             </div>
 
-            {/* Content */}
+            {/* Content Area */}
             <div className="xl:w-3/5 p-8 md:p-12 flex flex-col justify-center">
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 {tournament.status === 'upcoming' && (
-                  <div className="px-4 py-1 bg-blue-500/10 text-blue-400 rounded-full text-xs font-black border border-blue-500/20">📢 UPCOMING</div>
+                  <div className="px-4 py-1 bg-blue-500/10 text-blue-400 rounded-full text-xs font-black border border-blue-500/20 tracking-tighter">📢 UPCOMING</div>
                 )}
                 {tournament.status === 'ended' && (
-                  <div className="px-4 py-1 bg-red-500/10 text-red-400 rounded-full text-xs font-black border border-red-500/20">FINISHED</div>
+                  <div className="px-4 py-1 bg-red-500/10 text-red-400 rounded-full text-xs font-black border border-red-500/20 tracking-tighter">FINISHED</div>
                 )}
                 <div className="flex items-center gap-2 px-4 py-1 bg-gray-900 text-gray-400 rounded-full text-xs font-bold border border-gray-700">
-                   <Calendar className="w-3 h-3" /> {tournament.date || "14 April"}
+                   <Calendar className="w-3 h-3" /> {tournament.date || "Updating..."}
                 </div>
               </div>
 
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-8">{tournament.title}</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-10 leading-tight">{tournament.title}</h2>
 
               {/* Dynamic Logic: Winners OR Description */}
               {tournament.status === 'ended' ? (
                 <div className="mb-8 space-y-4">
-                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">🏆 Tournament Results</h3>
-                  <div className="bg-gradient-to-r from-yellow-600/20 to-transparent p-4 rounded-xl border border-yellow-500/20 flex items-center gap-4">
-                    <span className="text-3xl">🥇</span>
+                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-6">🏆 Tournament Results</h3>
+                  <div className="bg-gradient-to-r from-yellow-600/20 to-transparent p-5 rounded-2xl border border-yellow-500/20 flex items-center gap-5">
+                    <span className="text-4xl">🥇</span>
                     <div>
-                      <p className="text-[10px] text-yellow-500 font-bold uppercase">Champion</p>
-                      <p className="text-lg font-black text-white italic">{tournament.winners?.first || "TBD"}</p>
+                      <p className="text-[10px] text-yellow-500 font-bold uppercase tracking-widest">Champion</p>
+                      <p className="text-xl font-black text-white italic">{tournament.winners?.first || "TBD"}</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-400/10 p-4 rounded-xl border border-gray-400/20 flex items-center gap-3">
-                      <span className="text-xl">🥈</span>
-                      <p className="text-sm font-bold text-white">{tournament.winners?.second || "TBD"}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-gray-400/10 p-4 rounded-xl border border-gray-400/20 flex items-center gap-4">
+                      <span className="text-2xl">🥈</span>
+                      <p className="font-bold text-white">{tournament.winners?.second || "TBD"}</p>
                     </div>
-                    <div className="bg-orange-800/10 p-4 rounded-xl border border-orange-800/20 flex items-center gap-3">
-                      <span className="text-xl">🥉</span>
-                      <p className="text-sm font-bold text-white">{tournament.winners?.third || "TBD"}</p>
+                    <div className="bg-orange-800/10 p-4 rounded-xl border border-orange-800/20 flex items-center gap-4">
+                      <span className="text-2xl">🥉</span>
+                      <p className="font-bold text-white">{tournament.winners?.third || "TBD"}</p>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <div className="p-5 bg-gray-900/50 rounded-xl border border-gray-700/50">
-                    <h3 className="text-xs font-black text-blue-400 uppercase mb-3">Format</h3>
-                    <ul className="space-y-1">
-                      {tournament.format?.map((f: string, i: number) => <li key={i} className="text-gray-400 text-xs">• {f}</li>)}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                  <div>
+                    <h3 className="text-xs font-black text-blue-400 uppercase mb-4 tracking-widest">Format</h3>
+                    <ul className="space-y-2">
+                      {tournament.format?.map((f: string, i: number) => <li key={i} className="text-gray-400 text-xs flex gap-2"><span>•</span> {f}</li>)}
                     </ul>
                   </div>
-                  <div className="p-5 bg-gray-900/50 rounded-xl border border-gray-700/50">
-                    <h3 className="text-xs font-black text-purple-400 uppercase mb-3">Rules</h3>
-                    <ul className="space-y-1">
-                      {tournament.rules?.map((r: string, i: number) => <li key={i} className="text-gray-400 text-xs">• {r}</li>)}
+                  <div>
+                    <h3 className="text-xs font-black text-purple-400 uppercase mb-4 tracking-widest">Rules</h3>
+                    <ul className="space-y-2">
+                      {tournament.rules?.map((r: string, i: number) => <li key={i} className="text-gray-400 text-xs flex gap-2"><span>•</span> {r}</li>)}
                     </ul>
                   </div>
                 </div>
               )}
 
-              {/* Prizes */}
-              <div className="mb-10 p-4 bg-black/20 rounded-xl border border-gray-800">
-                <p className="text-[10px] font-bold text-gray-500 uppercase mb-3 tracking-widest">🎁 Prize Pool</p>
-                <div className="flex justify-between gap-2">
-                  <div className="text-center flex-1"><p className="text-yellow-500 font-bold text-xs">{tournament.prizes?.first}</p></div>
-                  <div className="text-center flex-1 border-x border-gray-800"><p className="text-gray-400 font-bold text-xs">{tournament.prizes?.second}</p></div>
-                  <div className="text-center flex-1"><p className="text-orange-600 font-bold text-xs">{tournament.prizes?.third}</p></div>
+              {/* Prize Pool Row */}
+              <div className="mb-10 p-5 bg-black/20 rounded-2xl border border-gray-800">
+                <p className="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">🎁 Prize Pool</p>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="text-center"><p className="text-yellow-500 font-bold text-xs">{tournament.prizes?.first}</p></div>
+                  <div className="text-center border-x border-gray-800"><p className="text-gray-300 font-bold text-xs">{tournament.prizes?.second}</p></div>
+                  <div className="text-center"><p className="text-orange-600 font-bold text-xs">{tournament.prizes?.third}</p></div>
                 </div>
               </div>
 
-              {/* Link */}
+              {/* Action Button */}
               {tournament.status !== 'ended' ? (
-                <a href={tournament.registrationLink || "#"} target="_blank" className="flex items-center justify-center gap-2 w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded-xl transition-all">
-                  REGISTER NOW <ExternalLink size={18} />
+                <a href={tournament.registrationLink || "#"} target="_blank" className="flex items-center justify-center gap-3 w-full py-5 bg-red-600 hover:bg-red-700 text-white font-black rounded-2xl transition-all shadow-xl shadow-red-900/30">
+                  REGISTER NOW <ExternalLink size={20} />
                 </a>
               ) : (
-                <div className="w-full py-4 bg-gray-900 text-gray-600 text-center font-black rounded-xl border border-gray-800">CLOSED</div>
+                <div className="w-full py-5 bg-gray-900 text-gray-600 text-center font-black rounded-2xl border border-gray-800">REGISTRATION CLOSED</div>
               )}
             </div>
           </div>
