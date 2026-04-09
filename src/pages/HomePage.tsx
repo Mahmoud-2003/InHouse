@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Trophy, Users, Target, ArrowRight, ExternalLink, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
+import { Trophy, Users, Target, ArrowRight, ExternalLink, Calendar, CheckCircle, AlertCircle, Gamepad2 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, onValue } from 'firebase/database';
 
+// إعدادات فايربيز (تأكد من مطابقتها لبيانات مشروعك)
 const firebaseConfig = {
   apiKey: "AIzaSyAA-vBOTLjEfzjZ3PqzxWecc00_cho8Jvo",
   authDomain: "inhouseproject-facd0.firebaseapp.com",
@@ -39,8 +40,8 @@ export default function HomePage({ onNavigate }: HomePageProps) {
   );
 
   return (
-    <div className="min-h-screen bg-gray-950">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-gray-950 text-white font-sans selection:bg-blue-500/30">
+      
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-red-900/20"></div>
         <div className="absolute inset-0 bg-[url('https://img.lightshot.app/M554D-EUQiil2yZ99SHVMQ.jpg')] bg-cover bg-center opacity-20"></div>
@@ -57,94 +58,146 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Tournament Section */}
-      <section className="py-20 bg-gray-900">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gray-800 rounded-3xl border border-gray-700 overflow-hidden flex flex-col xl:flex-row shadow-2xl">
+      {/* ---------------- Tournament Section ---------------- */}
+      <section className="py-24 relative z-10 bg-gray-950">
+        <div className="container mx-auto px-4">
+          <div className="bg-gray-900/50 border border-white/5 rounded-[2.5rem] overflow-hidden backdrop-blur-sm flex flex-col xl:flex-row shadow-2xl">
             
             {/* Image Banner */}
-            <div className="xl:w-2/5 h-80 xl:h-auto relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent xl:bg-gradient-to-r z-10"></div>
+            <div className="xl:w-2/5 h-[400px] xl:h-auto relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent xl:bg-gradient-to-r z-10"></div>
               <img 
                 src={tournament.imageUrl} 
-                className={`w-full h-full object-cover transition-all duration-1000 ${tournament.status === 'ended' ? 'grayscale opacity-40 scale-105' : 'scale-100'}`} 
-                alt="Banner"
+                className={`w-full h-full object-cover transition-all duration-1000 transform hover:scale-105 ${tournament.status === 'ended' ? 'grayscale opacity-30' : 'grayscale-0 opacity-80'}`} 
+                alt="Tournament Banner"
               />
             </div>
 
             {/* Content Area */}
-            <div className="xl:w-3/5 p-8 md:p-12 flex flex-col justify-center">
-              <div className="flex flex-wrap items-center gap-3 mb-6">
+            <div className="xl:w-3/5 p-8 md:p-16 flex flex-col justify-center">
+              
+              {/* Badges Row */}
+              <div className="flex flex-wrap items-center gap-3 mb-10">
+                {/* Game Type Badge */}
+                {tournament.gameType === 'lol' ? (
+                  <div className="px-4 py-1.5 bg-blue-600/10 text-blue-400 rounded-lg text-[10px] font-black border border-blue-500/20 tracking-[0.2em] flex items-center gap-2">
+                    <Gamepad2 size={14} /> LEAGUE OF LEGENDS
+                  </div>
+                ) : (
+                  <div className="px-4 py-1.5 bg-red-600/10 text-red-500 rounded-lg text-[10px] font-black border border-red-500/20 tracking-[0.2em] flex items-center gap-2">
+                    <Target size={14} /> VALORANT
+                  </div>
+                )}
+
+                {/* Status Badge */}
                 {tournament.status === 'upcoming' && (
-                  <div className="px-4 py-1 bg-blue-500/10 text-blue-400 rounded-full text-xs font-black border border-blue-500/20 tracking-tighter">📢 UPCOMING</div>
+                  <div className="px-4 py-1.5 bg-green-500/10 text-green-400 rounded-lg text-[10px] font-black border border-green-500/20 tracking-widest">ACTIVE</div>
                 )}
                 {tournament.status === 'ended' && (
-                  <div className="px-4 py-1 bg-red-500/10 text-red-400 rounded-full text-xs font-black border border-red-500/20 tracking-tighter">FINISHED</div>
+                  <div className="px-4 py-1.5 bg-red-500/10 text-red-500 rounded-lg text-[10px] font-black border border-red-500/20 tracking-widest">CLOSED</div>
                 )}
-                <div className="flex items-center gap-2 px-4 py-1 bg-gray-900 text-gray-400 rounded-full text-xs font-bold border border-gray-700">
-                   <Calendar className="w-3 h-3" /> {tournament.date || "Updating..."}
+                
+                {/* Date Badge */}
+                <div className="flex items-center gap-2 px-4 py-1.5 bg-white/5 text-gray-400 rounded-lg text-[10px] font-bold border border-white/5">
+                  <Calendar size={14} /> {tournament.date || "Updating..."}
                 </div>
               </div>
 
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-10 leading-tight">{tournament.title}</h2>
+              <h2 className="text-4xl md:text-6xl font-black text-white mb-12 tracking-tight italic uppercase">
+                {tournament.title}
+              </h2>
 
-              {/* Dynamic Logic: Winners OR Description */}
+              {/* Dynamic Content Switching */}
               {tournament.status === 'ended' ? (
-                <div className="mb-8 space-y-4">
-                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-6">🏆 Tournament Results</h3>
-                  <div className="bg-gradient-to-r from-yellow-600/20 to-transparent p-5 rounded-2xl border border-yellow-500/20 flex items-center gap-5">
-                    <span className="text-4xl">🥇</span>
-                    <div>
-                      <p className="text-[10px] text-yellow-500 font-bold uppercase tracking-widest">Champion</p>
-                      <p className="text-xl font-black text-white italic">{tournament.winners?.first || "TBD"}</p>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="bg-gray-400/10 p-4 rounded-xl border border-gray-400/20 flex items-center gap-4">
-                      <span className="text-2xl">🥈</span>
-                      <p className="font-bold text-white">{tournament.winners?.second || "TBD"}</p>
-                    </div>
-                    <div className="bg-orange-800/10 p-4 rounded-xl border border-orange-800/20 flex items-center gap-4">
-                      <span className="text-2xl">🥉</span>
-                      <p className="font-bold text-white">{tournament.winners?.third || "TBD"}</p>
-                    </div>
-                  </div>
+                /* --- WINNERS PODIUM --- */
+                <div className="mb-12 space-y-4">
+                   <h3 className="text-xs font-black text-gray-500 uppercase tracking-widest mb-6">🏆 Final Standings</h3>
+                   
+                   <div className="bg-gradient-to-r from-yellow-500/10 to-transparent p-6 rounded-2xl border border-yellow-500/20 flex items-center gap-6 group hover:bg-yellow-500/20 transition-all cursor-default">
+                      <div className="text-5xl drop-shadow-2xl">🥇</div>
+                      <div>
+                        <p className="text-[10px] font-black text-yellow-500 uppercase tracking-widest">Champion</p>
+                        <p className="text-2xl font-black text-white italic tracking-wide">{tournament.winners?.first || "TBD"}</p>
+                      </div>
+                   </div>
+
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="bg-white/5 p-5 rounded-2xl border border-white/5 flex items-center gap-4 hover:bg-white/10 transition-all">
+                        <div className="text-3xl">🥈</div>
+                        <div>
+                          <p className="text-[10px] font-black text-gray-400 uppercase">2nd Place</p>
+                          <p className="text-lg font-bold text-white">{tournament.winners?.second || "TBD"}</p>
+                        </div>
+                      </div>
+                      <div className="bg-white/5 p-5 rounded-2xl border border-white/5 flex items-center gap-4 hover:bg-white/10 transition-all">
+                        <div className="text-3xl">🥉</div>
+                        <div>
+                          <p className="text-[10px] font-black text-orange-500 uppercase">3rd Place</p>
+                          <p className="text-lg font-bold text-white">{tournament.winners?.third || "TBD"}</p>
+                        </div>
+                      </div>
+                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                  <div>
-                    <h3 className="text-xs font-black text-blue-400 uppercase mb-4 tracking-widest">Format</h3>
-                    <ul className="space-y-2">
-                      {tournament.format?.map((f: string, i: number) => <li key={i} className="text-gray-400 text-xs flex gap-2"><span>•</span> {f}</li>)}
+                /* --- RULES & FORMAT --- */
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+                  <div className="space-y-5">
+                    <h3 className={`text-xs font-black uppercase tracking-widest pb-2 border-b ${tournament.gameType === 'lol' ? 'text-blue-400 border-blue-500/30' : 'text-red-500 border-red-500/30'}`}>🏆 Format</h3>
+                    <ul className="space-y-3">
+                      {tournament.format?.map((f: string, i: number) => (
+                        <li key={i} className="text-gray-400 text-sm font-medium flex gap-3">
+                          <span className={tournament.gameType === 'lol' ? 'text-blue-500' : 'text-red-500'}>▶</span> {f}
+                        </li>
+                      ))}
                     </ul>
                   </div>
-                  <div>
-                    <h3 className="text-xs font-black text-purple-400 uppercase mb-4 tracking-widest">Rules</h3>
-                    <ul className="space-y-2">
-                      {tournament.rules?.map((r: string, i: number) => <li key={i} className="text-gray-400 text-xs flex gap-2"><span>•</span> {r}</li>)}
+                  <div className="space-y-5">
+                    <h3 className="text-xs font-black text-purple-400 uppercase tracking-widest pb-2 border-b border-purple-500/30">📋 Rules</h3>
+                    <ul className="space-y-3">
+                      {tournament.rules?.map((r: string, i: number) => (
+                        <li key={i} className="text-gray-400 text-sm font-medium flex gap-3">
+                          <span className="text-purple-500">▶</span> {r}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               )}
 
               {/* Prize Pool Row */}
-              <div className="mb-10 p-5 bg-black/20 rounded-2xl border border-gray-800">
-                <p className="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">🎁 Prize Pool</p>
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="text-center"><p className="text-yellow-500 font-bold text-xs">{tournament.prizes?.first}</p></div>
-                  <div className="text-center border-x border-gray-800"><p className="text-gray-300 font-bold text-xs">{tournament.prizes?.second}</p></div>
-                  <div className="text-center"><p className="text-orange-600 font-bold text-xs">{tournament.prizes?.third}</p></div>
-                </div>
+              <div className="mb-12 border-t border-white/5 pt-10">
+                 <div className="grid grid-cols-3 gap-6">
+                    <div className="text-center">
+                      <p className="text-[10px] font-black text-gray-500 uppercase mb-2 tracking-widest">1st Prize</p>
+                      <p className="text-white text-sm font-black italic">{tournament.prizes?.first}</p>
+                    </div>
+                    <div className="text-center border-x border-white/5">
+                      <p className="text-[10px] font-black text-gray-500 uppercase mb-2 tracking-widest">2nd Prize</p>
+                      <p className="text-white text-sm font-black italic">{tournament.prizes?.second}</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-[10px] font-black text-gray-500 uppercase mb-2 tracking-widest">3rd Prize</p>
+                      <p className="text-white text-sm font-black italic">{tournament.prizes?.third}</p>
+                    </div>
+                 </div>
               </div>
 
-              {/* Action Button */}
+              {/* Final Action */}
               {tournament.status !== 'ended' ? (
-                <a href={tournament.registrationLink || "#"} target="_blank" className="flex items-center justify-center gap-3 w-full py-5 bg-red-600 hover:bg-red-700 text-white font-black rounded-2xl transition-all shadow-xl shadow-red-900/30">
-                  REGISTER NOW <ExternalLink size={20} />
+                <a 
+                  href={tournament.registrationLink || "#"} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={`group flex items-center justify-center gap-3 w-full py-6 text-white font-black rounded-2xl transition-all shadow-2xl transform hover:-translate-y-1 ${tournament.gameType === 'lol' ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-900/20' : 'bg-red-600 hover:bg-red-700 shadow-red-900/20'}`}
+                >
+                  JOIN TOURNAMENT <ExternalLink size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </a>
               ) : (
-                <div className="w-full py-5 bg-gray-900 text-gray-600 text-center font-black rounded-2xl border border-gray-800">REGISTRATION CLOSED</div>
+                <div className="w-full py-6 bg-white/5 text-gray-600 text-center font-black rounded-2xl border border-white/5 tracking-[0.3em] cursor-not-allowed">
+                  REGISTRATION CLOSED
+                </div>
               )}
+
             </div>
           </div>
         </div>
@@ -200,6 +253,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
         </div>
       </section>
+
+      {/* Footer Branding */}
+      <footer className="py-10 text-center border-t border-white/5">
+         <p className="text-gray-600 text-[10px] font-bold tracking-[0.5em] uppercase">Powered by InHouse Management System</p>
+      </footer>
     </div>
   );
 }
