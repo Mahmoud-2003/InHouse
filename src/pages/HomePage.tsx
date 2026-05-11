@@ -44,7 +44,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-red-900/20"></div>
-        <div className="absolute inset-0 bg-[url('https://img.lightshot.app/M554D-EUQiil2yZ99SHVMQ.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-[url('https://cdn.discordapp.com/attachments/665197143400906784/1503320363726143649/image.png?ex=6a02ebb1&is=6a019a31&hm=57509555250d5b53b9ac6f18f49ea3f2789a986c3324f4afdb7dca78229cc1d2&')] bg-cover bg-center opacity-20"></div>
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="text-5xl sm:text-7xl font-bold text-white mb-6 leading-tight">
             InHouse Community
