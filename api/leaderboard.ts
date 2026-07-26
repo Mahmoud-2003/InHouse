@@ -26,6 +26,7 @@ function parseEntries(fields: DiscordEmbedField[]): LeaderboardEntry[] {
     const value = field.value
       .replace(/<a?:\w+:\d+>/g, '')
       .replace(/:\w+:/g, '')
+      .replace(/`/g, '')
       .trim();
 
     const statsMatch = value.match(/^(.+?)\s+(\d+)W\s+(\d+)L\s+(\d+)%\s*WR$/i);
