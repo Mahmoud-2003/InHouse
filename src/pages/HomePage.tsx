@@ -1,182 +1,209 @@
-import { useState, useEffect } from 'react';
-import { Trophy, Target, ArrowRight, ExternalLink, Calendar, AlertCircle, Gamepad2, Users, Star } from 'lucide-react';
-import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, onValue } from 'firebase/database';
-
-// إعدادات فايربيز
-const firebaseConfig = {
-  apiKey: "AIzaSyAA-vBOTLjEfzjZ3PqzxWecc00_cho8Jvo",
-  authDomain: "inhouseproject-facd0.firebaseapp.com",
-  databaseURL: "https://inhouseproject-facd0-default-rtdb.firebaseio.com",
-  projectId: "inhouseproject-facd0",
-  storageBucket: "inhouseproject-facd0.firebasestorage.app",
-  messagingSenderId: "962024767549",
-  appId: "1:962024767549:web:199c2db19e117da19e2a54"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+import { useEffect, useState } from 'react';
+import { ArrowRight, Crown, Medal } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Reveal, RevealGroup, RevealItem } from '../components/Reveal';
+import GlowButton from '../components/GlowButton';
+import YouTubeBackground from '../components/YouTubeBackground';
+import { staggerContainer, staggerItem } from '../lib/motion';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
 }
 
+interface LeaderboardEntry {
+  rank: number;
+  name: string;
+  wins: number;
+  losses: number;
+  winRate: number;
+}
+
 export default function HomePage({ onNavigate }: HomePageProps) {
-  const [tournament, setTournament] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
 
   useEffect(() => {
-    // مؤقت حماية 3 ثواني لضمان فتح الموقع تحت أي ظرف
-    const safetyTimeout = setTimeout(() => setIsLoading(false), 3000);
-    const tournamentRef = ref(db, 'tournament');
-    
-    const unsubscribe = onValue(tournamentRef, 
-      (snapshot) => {
-        setTournament(snapshot.val());
-        setIsLoading(false);
-        clearTimeout(safetyTimeout);
-      },
-      (error) => {
-        console.error("Firebase Connection Error:", error);
-        setIsLoading(false);
-        clearTimeout(safetyTimeout);
-      }
-    );
+    let cancelled = false;
 
-    return () => { unsubscribe(); clearTimeout(safetyTimeout); };
+    fetch('/api/leaderboard')
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error('bad response'))))
+      .then((data) => {
+        if (cancelled) return;
+        setLeaderboard(data.entries ?? []);
+        setStatus('ready');
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setStatus('error');
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  if (isLoading) return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-    </div>
-  );
-
-  // اختيار البيانات للعرض (البطولة الحقيقية أو الحالة المقفولة)
-  const isTourneyActive = tournament && tournament.status !== "none";
-  const displayTourney = isTourneyActive ? tournament : {
-    isPlaceholder: true,
-    status: "none",
-    imageUrl: "https://img.lightshot.app/JCbdDY2-RQKEkax13zcHiQ.png",
-    date: "TBD",
-    gameType: null,
-    title: "NEXT EVENT TBD"
-  };
-
-  const tournamentTitle = isTourneyActive 
-    ? (displayTourney.gameType === 'lol' ? "LEAGUE OF LEGENDS TOURNAMENT" : "VALORANT TOURNAMENT")
-    : "COMMUNITY EVENTS";
-
   return (
-    <div className="min-h-screen bg-gray-950 text-white font-sans selection:bg-blue-500/30">
-      
+    <div className="min-h-screen bg-void text-ink font-sans selection:bg-volt/30">
+
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-red-900/20"></div>
-        <div className="absolute inset-0 bg-[url('https://img.lightshot.app/M554D-EUQiil2yZ99SHVMQ.jpg')] bg-cover bg-center opacity-20"></div>
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-5xl sm:text-7xl font-bold text-white mb-6 leading-tight">InHouse Community</h1>
-          <p className="text-xl sm:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto italic">"Proven mechanical skill meets organized strategy"</p>
+      <section className="relative h-screen min-h-[640px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://img.lightshot.app/M554D-EUQiil2yZ99SHVMQ.jpg')] bg-cover bg-center opacity-[0.14]" />
+        <YouTubeBackground videoId="zF5Ddo9JdpY" />
+        <div className="absolute inset-0 bg-gradient-to-b from-void/40 via-void/75 to-void" />
+        <div className="absolute inset-0 bg-gradient-to-r from-void via-void/30 to-void" />
+        <div
+          className="absolute -top-32 -left-32 w-[32rem] h-[32rem] rounded-full bg-lolblue/10 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="absolute -bottom-32 -right-32 w-[32rem] h-[32rem] rounded-full bg-valred/10 blur-3xl"
+          aria-hidden
+        />
+
+        <motion.div
+          className="relative z-10 container mx-auto px-4 text-center"
+          initial="hidden"
+          animate="show"
+          variants={staggerContainer(0.12, 0.1)}
+        >
+          <motion.div variants={staggerItem} className="eyebrow justify-center mb-6">
+            <span className="live-dot" /> Season Live // Ranked Ladder Open
+          </motion.div>
+
+          <motion.h1
+            variants={staggerItem}
+            className="font-display text-6xl sm:text-8xl font-bold text-ink mb-6 leading-[0.95] uppercase tracking-tight"
+          >
+            InHouse
+            <span className="block bg-gradient-to-r from-volt to-lolblue bg-clip-text text-transparent">
+              League &amp; Valorant
+            </span>
+          </motion.h1>
+
+          <motion.p
+            variants={staggerItem}
+            className="text-lg sm:text-xl text-mute mb-12 max-w-2xl mx-auto italic"
+          >
+            "Proven mechanical skill meets organized strategy"
+          </motion.p>
+
+          <motion.div variants={staggerItem} className="flex flex-wrap items-center justify-center gap-4">
+            <GlowButton href="https://discord.gg/dCjJ6fFH4g" variant="volt">
+              Join Discord Server <ArrowRight className="w-4 h-4" />
+            </GlowButton>
+            <GlowButton onClick={() => onNavigate('inhouse')} variant="ghost">
+              Learn More
+            </GlowButton>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.4em] text-mute/60 uppercase"
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 2.4, repeat: Infinity }}
+        >
+          Scroll
+        </motion.div>
+      </section>
+
+      {/* Leaderboard Section */}
+      <section className="py-24 relative z-10 bg-void">
+        <div className="container mx-auto px-4">
+          <Reveal className="text-center mb-14">
+            <p className="eyebrow justify-center mb-3"><span className="live-dot" /> Season Rankings</p>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-ink uppercase mb-4">Top 20 Leaderboard</h2>
+            <p className="text-mute max-w-2xl mx-auto">
+              The highest-ranked InHouse competitors, ranked by points earned across every match.
+            </p>
+          </Reveal>
+
+          <Reveal>
+            <div className="hud-corners max-w-3xl mx-auto bg-panel border border-line clip-card-lg overflow-hidden">
+              {status === 'loading' ? (
+                <div className="px-6 py-10 text-center">
+                  <p className="font-mono text-xs text-mute/60 uppercase tracking-widest">Loading standings…</p>
+                </div>
+              ) : leaderboard.length === 0 ? (
+                <div className="px-6 py-10 text-center">
+                  <p className="font-mono text-xs text-mute/60 uppercase tracking-widest">
+                    {status === 'error' ? 'Leaderboard unavailable right now' : 'No suitable records to display'}
+                  </p>
+                </div>
+              ) : (
+                <RevealGroup stagger={0.06}>
+                  {leaderboard.map(({ rank, name, wins, losses, winRate }) => (
+                    <RevealItem key={rank}>
+                      <div className={`flex items-center gap-4 px-6 py-4 border-b border-line last:border-b-0 ${rank <= 3 ? 'bg-white/[0.02]' : ''}`}>
+                        <div
+                          className={`w-10 h-10 flex-shrink-0 clip-tag flex items-center justify-center font-mono font-bold text-sm border ${
+                            rank === 1
+                              ? 'bg-gold/10 border-gold/40 text-gold'
+                              : rank === 2
+                              ? 'bg-white/10 border-white/30 text-ink'
+                              : rank === 3
+                              ? 'bg-valred/10 border-valred/30 text-valred'
+                              : 'bg-void border-line text-mute'
+                          }`}
+                        >
+                          {rank === 1 ? <Crown className="w-4 h-4" /> : rank <= 3 ? <Medal className="w-4 h-4" /> : rank}
+                        </div>
+                        <p className="flex-1 min-w-0 font-display font-semibold text-ink uppercase tracking-wide truncate">
+                          {name}
+                        </p>
+                        <p className="font-mono text-sm text-mute flex-shrink-0">
+                          {wins}W {losses}L <span className="text-ink/80">{winRate}%</span> WR
+                        </p>
+                      </div>
+                    </RevealItem>
+                  ))}
+                </RevealGroup>
+              )}
+              <div className="px-6 py-4 bg-void/60 text-center">
+                <p className="font-mono text-[10px] tracking-[0.3em] text-mute/60 uppercase">
+                  Rankings update automatically once matches are reported
+                </p>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Tournament Section - Always Visible */}
-      <section className="py-24 relative z-10 bg-gray-950">
-        <div className="container mx-auto px-4">
-          <div className="bg-gray-900/50 border border-white/5 rounded-[2.5rem] overflow-hidden backdrop-blur-sm flex flex-col xl:flex-row shadow-2xl">
-            
-            {/* Image */}
-            <div className="xl:w-2/5 h-[400px] xl:h-auto relative overflow-hidden">
-              <img 
-                src={displayTourney.imageUrl} 
-                className={`w-full h-full object-cover ${displayTourney.isPlaceholder || displayTourney.status === 'ended' ? 'grayscale opacity-30' : ''}`} 
-                alt="Banner" 
-              />
-            </div>
-
-            {/* Content */}
-            <div className="xl:w-3/5 p-8 md:p-16 flex flex-col justify-center">
-              <div className="flex flex-wrap items-center gap-3 mb-10">
-                {displayTourney.gameType === 'lol' && <div className="px-4 py-1.5 bg-blue-600/10 text-blue-400 rounded-lg text-[10px] font-black border border-blue-500/20">LEAGUE OF LEGENDS</div>}
-                {displayTourney.gameType === 'valorant' && <div className="px-4 py-1.5 bg-red-600/10 text-red-500 rounded-lg text-[10px] font-black border border-red-500/20">VALORANT</div>}
-                <div className="px-4 py-1.5 bg-white/5 text-gray-400 rounded-lg text-[10px] font-bold border border-white/5 tracking-widest uppercase">
-                  {displayTourney.status === 'upcoming' ? "Active" : (displayTourney.status === 'ended' ? "Finished" : "TBD")}
-                </div>
-                <div className="flex items-center gap-2 px-4 py-1.5 bg-white/5 text-gray-400 rounded-lg text-[10px] font-bold border border-white/5">
-                  <Calendar size={14} /> {displayTourney.date || "Updating..."}
+      {/* Choose Game Section */}
+      <section className="py-20 bg-void">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal className="text-center mb-16">
+            <p className="eyebrow justify-center mb-3">Pick Your Battlefield</p>
+            <h2 className="font-display text-4xl font-bold text-ink uppercase">Choose Your Game</h2>
+          </Reveal>
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-2 gap-8" stagger={0.15}>
+            <RevealItem>
+              <div onClick={() => onNavigate('lol')} className="relative group cursor-pointer overflow-hidden clip-card-lg border border-line hover:border-lolblue/60 transition-colors h-full">
+                <div className="absolute inset-0 bg-gradient-to-t from-void via-void/60 to-transparent z-10" />
+                <img src="https://img.lightshot.app/zbmOUtzaROeDjNm5QaImsA.png" alt="LoL" className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
+                  <p className="font-mono text-[10px] tracking-[0.3em] text-lolblue uppercase mb-2">5v5 // Summoner's Rift</p>
+                  <h3 className="font-display text-3xl font-bold text-ink mb-2 uppercase">League of Legends</h3>
+                  <div className="flex items-center text-lolblue font-semibold text-sm">Learn More <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" /></div>
                 </div>
               </div>
-
-              <h2 className="text-4xl md:text-6xl font-black text-white mb-12 uppercase italic">{tournamentTitle}</h2>
-
-              {/* Conditional Rendering based on Status */}
-              {displayTourney.isPlaceholder ? (
-                <div className="mb-12 flex items-center gap-4 text-gray-400 bg-white/5 p-8 rounded-2xl border border-white/5">
-                   <AlertCircle className="w-10 h-10 text-blue-500 flex-shrink-0" />
-                   <div>
-                     <p className="font-bold text-white text-lg">Preparing for the next battle...</p>
-                     <p className="text-sm">We are currently organizing new events. Stay tuned to our Discord for announcements!</p>
-                   </div>
+            </RevealItem>
+            <RevealItem>
+              <div onClick={() => onNavigate('valorant')} className="relative group cursor-pointer overflow-hidden clip-card-lg border border-line hover:border-valred/60 transition-colors h-full">
+                <div className="absolute inset-0 bg-gradient-to-t from-void via-void/60 to-transparent z-10" />
+                <img src="https://img.lightshot.app/Tdva4daYQpyNsS4yySiBYw.png" alt="Val" className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
+                  <p className="font-mono text-[10px] tracking-[0.3em] text-valred uppercase mb-2">5v5 // Tactical Shooter</p>
+                  <h3 className="font-display text-3xl font-bold text-ink mb-2 uppercase">Valorant</h3>
+                  <div className="flex items-center text-valred font-semibold text-sm">Learn More <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" /></div>
                 </div>
-              ) : displayTourney.status === 'ended' ? (
-                <div className="mb-12 space-y-4">
-                  <h3 className="text-xs font-black text-gray-500 uppercase tracking-widest mb-6">🏆 Tournament Winners</h3>
-                  <div className="bg-yellow-500/10 p-6 rounded-2xl border border-yellow-500/20 flex items-center gap-6">
-                    <div className="text-5xl">🥇</div>
-                    <div><p className="text-[10px] font-black text-yellow-500 uppercase">Champion</p><p className="text-2xl font-black italic">{displayTourney.winners?.first || "TBD"}</p></div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-white/5 p-4 rounded-xl border border-white/5"><p className="text-[10px] font-black text-gray-400 uppercase">2nd</p><p className="text-lg font-bold">{displayTourney.winners?.second || "TBD"}</p></div>
-                    <div className="bg-white/5 p-4 rounded-xl border border-white/5"><p className="text-[10px] font-black text-orange-500 uppercase">3rd</p><p className="text-lg font-bold">{displayTourney.winners?.third || "TBD"}</p></div>
-                  </div>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
-                   <div><h3 className="text-xs font-black text-blue-400 mb-4 tracking-widest border-b border-blue-500/20 pb-2">FORMAT</h3><ul className="text-gray-400 text-sm space-y-2">{displayTourney.format?.map((f:any, i:any)=><li key={i}>▶ {f}</li>)}</ul></div>
-                   <div><h3 className="text-xs font-black text-purple-400 mb-4 tracking-widest border-b border-purple-500/20 pb-2">RULES</h3><ul className="text-gray-400 text-sm space-y-2">{displayTourney.rules?.map((r:any, i:any)=><li key={i}>▶ {r}</li>)}</ul></div>
-                </div>
-              )}
-
-              {/* Registration Button */}
-              {displayTourney.status === 'upcoming' ? (
-                <a 
-                  href={displayTourney.registrationLink || "#"} 
-                  target="_blank" 
-                  className={`group flex items-center justify-center gap-3 w-full py-6 text-white font-black rounded-2xl transition-all ${displayTourney.gameType === 'lol' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-red-600 hover:bg-red-700'}`}
-                >
-                  JOIN TOURNAMENT <ExternalLink size={20} />
-                </a>
-              ) : (
-                <div className="w-full py-6 bg-white/5 text-gray-600 text-center font-black rounded-2xl border border-white/5 tracking-[0.3em]">
-                  REGISTRATION CLOSED
-                </div>
-              )}
-            </div>
-          </div>
+              </div>
+            </RevealItem>
+          </RevealGroup>
         </div>
       </section>
 
-      {/* Choose Game Section (كما هي في ملفك الأصلي) */}
-      <section className="py-20 bg-gray-950">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white text-center mb-16">Choose Your Game</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div onClick={() => onNavigate('lol')} className="relative group cursor-pointer overflow-hidden rounded-xl border-2 border-gray-800 hover:border-blue-500 transition-all">
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10"></div>
-              <img src="https://img.lightshot.app/zbmOUtzaROeDjNm5QaImsA.png" alt="LoL" className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-8 z-20"><h3 className="text-3xl font-bold text-white mb-2">League of Legends</h3><p className="text-gray-300 mb-4">5v5 competitive matches</p><div className="flex items-center text-blue-400 font-semibold">Learn More <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" /></div></div>
-            </div>
-            <div onClick={() => onNavigate('valorant')} className="relative group cursor-pointer overflow-hidden rounded-xl border-2 border-gray-800 hover:border-red-500 transition-all">
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10"></div>
-              <img src="https://img.lightshot.app/Tdva4daYQpyNsS4yySiBYw.png" alt="Val" className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-8 z-20"><h3 className="text-3xl font-bold text-white mb-2">Valorant</h3><p className="text-gray-300 mb-4">Tactical 5v5 shooter</p><div className="flex items-center text-red-400 font-semibold">Learn More <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" /></div></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer className="py-10 text-center border-t border-white/5">
-         <p className="text-gray-600 text-[10px] font-bold tracking-[0.5em] uppercase">Powered by InHouse Management System</p>
+      <footer className="py-10 text-center border-t border-line">
+         <p className="text-mute/50 text-[10px] font-mono font-bold tracking-[0.5em] uppercase">Powered by InHouse Management System</p>
       </footer>
     </div>
   );
