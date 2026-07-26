@@ -111,7 +111,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         <div className="container mx-auto px-4">
           <Reveal className="text-center mb-14">
             <p className="eyebrow justify-center mb-3"><span className="live-dot" /> Season Rankings</p>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-ink uppercase mb-4">Top 20 Leaderboard</h2>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-ink uppercase mb-4">Top 20 League Leaderboard</h2>
             <p className="text-mute max-w-2xl mx-auto">
               The highest-ranked InHouse competitors, ranked by points earned across every match.
             </p>
