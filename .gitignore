@@ -4,6 +4,10 @@ node_modules/
 # build output
 dist/
 build/
+out/
+.next/
+next-env.d.ts
+*.tsbuildinfo
 
 # logs
 npm-debug.log*
@@ -15,6 +19,9 @@ yarn-error.log*
 .env.local
 .env.*.local
 
+# vercel
+.vercel
+
 # editor files
 .vscode/
 .idea/
@@ -22,3 +29,6 @@ yarn-error.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+
+*.md

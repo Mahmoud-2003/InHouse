@@ -1,36 +1,33 @@
+'use client';
+
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import logo from '../img/logo.gif';
 
-interface HeaderProps {
-  currentPage: string;
-  onNavigate: (page: string) => void;
-}
-
 const navItems = [
-  { id: 'home', label: 'Home' },
-  { id: 'inhouse', label: 'InHouse' },
-  { id: 'lol', label: 'League of Legends' },
-  { id: 'valorant', label: 'Valorant' },
-  { id: 'queue', label: 'Queue' },
-  { id: 'contact', label: 'Join Us' },
+  { href: '/', label: 'Home' },
+  { href: '/inhouse', label: 'InHouse' },
+  { href: '/lol', label: 'League of Legends' },
+  { href: '/valorant', label: 'Valorant' },
+  { href: '/queue', label: 'Queue' },
+  { href: '/contact', label: 'Join Us' },
 ];
 
-export default function Header({ currentPage, onNavigate }: HeaderProps) {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="fixed w-full top-0 z-50 bg-void/85 backdrop-blur-md border-b border-line md:pl-20">
       <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-volt to-lolblue" />
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <button
-            className="flex items-center gap-3 group"
-            onClick={() => onNavigate('home')}
-          >
+          <Link href="/" className="flex items-center gap-3 group">
             <img
-              src={logo}
+              src={logo.src}
               alt="Logo"
               className="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-110"
             />
@@ -42,7 +39,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 League &amp; Valorant
               </span>
             </span>
-          </button>
+          </Link>
 
           <a
             href="https://discord.gg/dCjJ6fFH4g"
@@ -73,23 +70,24 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
             >
               <div className="py-4 space-y-1">
                 {navItems.map((item, i) => (
-                  <motion.button
-                    key={item.id}
+                  <motion.div
+                    key={item.href}
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.04 }}
-                    onClick={() => {
-                      onNavigate(item.id);
-                      setIsMenuOpen(false);
-                    }}
-                    className={`block w-full text-left px-4 py-2.5 font-display text-sm font-semibold uppercase tracking-wide transition-colors ${
-                      currentPage === item.id
-                        ? 'bg-volt text-void clip-tag'
-                        : 'text-mute hover:text-ink hover:bg-panel'
-                    }`}
                   >
-                    {item.label}
-                  </motion.button>
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`block w-full text-left px-4 py-2.5 font-display text-sm font-semibold uppercase tracking-wide transition-colors ${
+                        pathname === item.href
+                          ? 'bg-volt text-void clip-tag'
+                          : 'text-mute hover:text-ink hover:bg-panel'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
                 ))}
                 <a
                   href="https://discord.gg/dCjJ6fFH4g"

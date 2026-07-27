@@ -1,21 +1,20 @@
+'use client';
+
 import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Gamepad2, Swords, Crosshair, ListOrdered, UserPlus } from 'lucide-react';
 import { FaDiscord } from 'react-icons/fa';
 import logo from '../img/logo.gif';
 
-interface SidebarProps {
-  currentPage: string;
-  onNavigate: (page: string) => void;
-}
-
 const navItems = [
-  { id: 'home', label: 'Home', icon: Home },
-  { id: 'inhouse', label: 'InHouse', icon: Gamepad2 },
-  { id: 'lol', label: 'League of Legends', icon: Swords },
-  { id: 'valorant', label: 'Valorant', icon: Crosshair },
-  { id: 'queue', label: 'Queue', icon: ListOrdered },
-  { id: 'contact', label: 'Join Us', icon: UserPlus },
+  { href: '/', label: 'Home', icon: Home },
+  { href: '/inhouse', label: 'InHouse', icon: Gamepad2 },
+  { href: '/lol', label: 'League of Legends', icon: Swords },
+  { href: '/valorant', label: 'Valorant', icon: Crosshair },
+  { href: '/queue', label: 'Queue', icon: ListOrdered },
+  { href: '/contact', label: 'Join Us', icon: UserPlus },
 ];
 
 const COLLAPSED = 80;
@@ -28,8 +27,9 @@ const labelMotion = {
   transition: { duration: 0.16 },
 };
 
-export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
+export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
+  const pathname = usePathname();
 
   return (
     <motion.aside
@@ -40,12 +40,9 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
       className="hidden md:flex fixed inset-y-0 left-0 z-[60] flex-col bg-panel border-r border-line overflow-hidden"
       style={{ width: COLLAPSED }}
     >
-      <button
-        onClick={() => onNavigate('home')}
-        className="h-16 flex items-center border-b border-line flex-shrink-0"
-      >
+      <Link href="/" className="h-16 flex items-center border-b border-line flex-shrink-0">
         <span className="w-20 flex-shrink-0 flex items-center justify-center">
-          <img src={logo} alt="Logo" className="w-9 h-9 object-contain" />
+          <img src={logo.src} alt="Logo" className="w-9 h-9 object-contain" />
         </span>
         <AnimatePresence>
           {expanded && (
@@ -54,16 +51,16 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
             </motion.span>
           )}
         </AnimatePresence>
-      </button>
+      </Link>
 
       <nav className="flex-1 py-3 flex flex-col gap-0.5 overflow-y-auto">
         {navItems.map((item) => {
-          const isActive = currentPage === item.id;
+          const isActive = pathname === item.href;
           const Icon = item.icon;
           return (
-            <button
-              key={item.id}
-              onClick={() => onNavigate(item.id)}
+            <Link
+              key={item.href}
+              href={item.href}
               className={`relative flex items-center h-14 flex-shrink-0 group transition-colors ${
                 isActive ? 'text-volt' : 'text-mute hover:text-ink'
               }`}
@@ -87,7 +84,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
                   </motion.span>
                 )}
               </AnimatePresence>
-            </button>
+            </Link>
           );
         })}
       </nav>

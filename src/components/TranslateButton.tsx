@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
@@ -285,8 +287,6 @@ function applyTranslation(enable: boolean) {
       revertAll();
     }
   } catch (e) {
-    // fail silently — translation is progressive enhancement
-    // eslint-disable-next-line no-console
     console.error('Translation error', e);
   }
 }
