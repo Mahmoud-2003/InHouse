@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Rajdhani, Inter, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
 const rajdhani = Rajdhani({
@@ -25,6 +26,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'InHouse League & Valorant',
   description:
     'InHouse League & Valorant is a competitive Discord community running organized InHouse matches and queues for League of Legends and Valorant players.',
@@ -45,7 +47,19 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'InHouse League & Valorant',
+    description:
+      'InHouse League & Valorant is a competitive Discord community running organized InHouse matches and queues for League of Legends and Valorant players.',
+    url: SITE_URL,
+    siteName: 'InHouse League & Valorant',
     images: ['/imgs/og-image.png'],
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  verification: {
+    google: 'zxE5VxSrBz2-UemP7HMXpCvhcg6SSSr2QYoOs0i6LPc',
   },
 };
 
