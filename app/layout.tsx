@@ -43,7 +43,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'InHouse League & Valorant' }],
   icons: {
-    icon: '/imgs/icon.svg',
+    icon: [
+      { url: '/imgs/icon.svg', type: 'image/svg+xml' },
+      { url: '/imgs/icon-48.png', type: 'image/png', sizes: '48x48' },
+      { url: '/imgs/icon-192.png', type: 'image/png', sizes: '192x192' },
+      { url: '/imgs/icon-512.png', type: 'image/png', sizes: '512x512' },
+    ],
+    shortcut: '/imgs/icon-192.png',
+    apple: '/imgs/icon-192.png',
   },
   openGraph: {
     title: 'InHouse League & Valorant',
