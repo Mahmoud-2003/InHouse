@@ -5,7 +5,7 @@ import GlowButton from '@/components/GlowButton';
 import YouTubeBackground from '@/components/YouTubeBackground';
 
 export const metadata: Metadata = {
-  title: 'Join Our Community — InHouse League & Valorant',
+  title: 'Join Our Community',
   description:
     "Ready to start playing? Join our Discord server and connect with us on social media. We're here to help you get started.",
 };

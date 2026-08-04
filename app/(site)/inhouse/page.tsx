@@ -6,7 +6,7 @@ import YouTubeBackground from '@/components/YouTubeBackground';
 import ticketImg from '@/img/ticket.png';
 
 export const metadata: Metadata = {
-  title: 'What is InHouse? — InHouse League & Valorant',
+  title: 'What is InHouse?',
   description:
     'InHouse is a competitive gaming system where players participate in organized 5v5 matches within our community. Experience fair, balanced games with players of similar skill levels.',
 };

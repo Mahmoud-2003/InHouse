@@ -5,7 +5,7 @@ import GlowButton from '@/components/GlowButton';
 import YouTubeBackground from '@/components/YouTubeBackground';
 
 export const metadata: Metadata = {
-  title: 'League of Legends InHouse — InHouse League & Valorant',
+  title: 'League of Legends InHouse',
   description:
     'Our League of Legends InHouse system provides a structured competitive environment where players can test their skills in organized 5v5 matches on Summoner\'s Rift.',
 };

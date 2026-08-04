@@ -27,9 +27,15 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'InHouse League & Valorant',
+  title: {
+    default: 'InHouse League & Valorant',
+    template: '%s — InHouse League & Valorant',
+  },
   description:
     'InHouse League & Valorant is a competitive Discord community running organized InHouse matches and queues for League of Legends and Valorant players.',
+  alternates: {
+    canonical: './',
+  },
   keywords: [
     'Discord',
     'InHouse',
@@ -53,13 +59,10 @@ export const metadata: Metadata = {
     apple: '/imgs/icon-192.png',
   },
   openGraph: {
-    title: 'InHouse League & Valorant',
-    description:
-      'InHouse League & Valorant is a competitive Discord community running organized InHouse matches and queues for League of Legends and Valorant players.',
-    url: SITE_URL,
+    url: './',
     siteName: 'InHouse League & Valorant',
-    images: ['/imgs/og-image.png'],
     type: 'website',
+    locale: 'en_US',
   },
   robots: {
     index: true,

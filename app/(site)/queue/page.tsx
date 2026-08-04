@@ -6,7 +6,7 @@ import YouTubeBackground from '@/components/YouTubeBackground';
 import queueImg from '@/img/queue.png';
 
 export const metadata: Metadata = {
-  title: 'Queue System — InHouse League & Valorant',
+  title: 'Queue System',
   description:
     "Join the queue, get matched, and drop straight into your team's private channel — no tickets, no waiting on staff.",
 };

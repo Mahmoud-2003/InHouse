@@ -5,7 +5,7 @@ import GlowButton from '@/components/GlowButton';
 import YouTubeBackground from '@/components/YouTubeBackground';
 
 export const metadata: Metadata = {
-  title: 'Valorant InHouse — InHouse League & Valorant',
+  title: 'Valorant InHouse',
   description:
     'Experience competitive Valorant matches in our organized InHouse system. Test your tactical skills, agent mastery, and teamwork in balanced 5v5 matches against players of similar skill levels.',
 };
