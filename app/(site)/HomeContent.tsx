@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, Crown, Medal } from 'lucide-react';
+import { ArrowRight, Crown, Medal, Trophy, ClipboardList, Gift } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Reveal, RevealGroup, RevealItem } from '@/components/Reveal';
 import GlowButton from '@/components/GlowButton';
 import YouTubeBackground from '@/components/YouTubeBackground';
 import { staggerContainer, staggerItem } from '@/lib/motion';
+import tournamentImg from '@/img/tournament.png';
 
 interface LeaderboardEntry {
   rank: number;
@@ -104,6 +105,101 @@ export default function HomeContent() {
         >
           Scroll
         </motion.div>
+      </section>
+
+      {/* Tournament Announcement Section */}
+      <section className="py-20 relative z-10 bg-void">
+        <div className="container mx-auto px-4">
+          <Reveal>
+            <div className="hud-corners clip-card-lg border border-line bg-panel overflow-hidden">
+              <div className="relative w-full aspect-video">
+                <img
+                  src={tournamentImg.src}
+                  alt="Warriors' House tournament banner"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-panel via-transparent to-transparent" />
+              </div>
+
+              <div className="p-6 sm:p-10">
+                <p className="eyebrow mb-4">
+                  <span className="live-dot" /> Tournament Announcement
+                </p>
+                <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink uppercase mb-2">
+                  Warriors&apos; House
+                </h2>
+                <p className="font-display text-lg text-lolblue font-semibold uppercase mb-4">
+                  League of Legends Tournament &mdash; Summoner&apos;s Rift Championship
+                </p>
+                <p className="text-mute leading-relaxed mb-10 max-w-3xl">
+                  Join us for a competitive League of Legends tournament where strategy, coordination, and
+                  mechanical skill determine who rises to the top. Gather your team and compete against strong
+                  opponents in a structured and professionally organized event.
+                </p>
+
+                <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10" stagger={0.08}>
+                  <RevealItem>
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 bg-volt/10 border border-volt/30 clip-tag flex items-center justify-center flex-shrink-0">
+                        <Trophy className="w-4 h-4 text-volt" />
+                      </div>
+                      <h3 className="font-display font-semibold text-ink uppercase text-sm">Tournament Format</h3>
+                    </div>
+                    <ul className="space-y-1.5 text-mute text-sm pl-10">
+                      <li className="flex items-start"><span className="text-volt mr-2">▸</span><span>5v5 Teams</span></li>
+                      <li className="flex items-start"><span className="text-volt mr-2">▸</span><span>Single Elimination Bracket</span></li>
+                      <li className="flex items-start"><span className="text-volt mr-2">▸</span><span>Best of 1 (Bo1) matches</span></li>
+                      <li className="flex items-start"><span className="text-volt mr-2">▸</span><span>Grand Final: Best of 3 (Bo3)</span></li>
+                      <li className="flex items-start"><span className="text-volt mr-2">▸</span><span>Map: Summoner&apos;s Rift</span></li>
+                      <li className="flex items-start"><span className="text-volt mr-2">▸</span><span>Server: West</span></li>
+                    </ul>
+                  </RevealItem>
+
+                  <RevealItem>
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 bg-lolblue/10 border border-lolblue/30 clip-tag flex items-center justify-center flex-shrink-0">
+                        <ClipboardList className="w-4 h-4 text-lolblue" />
+                      </div>
+                      <h3 className="font-display font-semibold text-ink uppercase text-sm">Rules &amp; Requirements</h3>
+                    </div>
+                    <ul className="space-y-1.5 text-mute text-sm pl-10">
+                      <li className="flex items-start"><span className="text-lolblue mr-2">▸</span><span>All players must use official, personal accounts</span></li>
+                      <li className="flex items-start"><span className="text-lolblue mr-2">▸</span><span>Sportsmanship and respectful conduct are mandatory</span></li>
+                      <li className="flex items-start"><span className="text-lolblue mr-2">▸</span><span>Teams must check in at least 15 minutes before match time</span></li>
+                      <li className="flex items-start"><span className="text-lolblue mr-2">▸</span><span>Match results must be reported promptly</span></li>
+                    </ul>
+                  </RevealItem>
+
+                  <RevealItem>
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 bg-gold/10 border border-gold/30 clip-tag flex items-center justify-center flex-shrink-0">
+                        <Gift className="w-4 h-4 text-gold" />
+                      </div>
+                      <h3 className="font-display font-semibold text-ink uppercase text-sm">Prizes</h3>
+                    </div>
+                    <ul className="space-y-1.5 text-mute text-sm pl-10">
+                      <li className="flex items-start"><span className="text-gold mr-2">▸</span><span>1st Place: 50 Chest &amp; Key + Custom Role (Champion)</span></li>
+                      <li className="flex items-start"><span className="text-gold mr-2">▸</span><span>2nd Place: 30 Chest &amp; Key</span></li>
+                      <li className="flex items-start"><span className="text-gold mr-2">▸</span><span>3rd Place: 20 Chest &amp; Key</span></li>
+                    </ul>
+                  </RevealItem>
+                </RevealGroup>
+
+                <div className="flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-line">
+                  <p className="font-mono text-xs tracking-[0.25em] text-mute/70 uppercase">
+                    16 &amp; 17 August, 2026 &mdash; 7:00 PM (GMT+2) &middot; 16 Teams &middot; Registration Open
+                  </p>
+                  <GlowButton
+                    href="https://battlefy.com/league-of-inhouses/warriorshouse/6a7305db8d58e4001a5a00ea/info?infoTab=details"
+                    variant="volt"
+                  >
+                    Register on Battlefy <ArrowRight className="w-4 h-4" />
+                  </GlowButton>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </section>
 
       {/* Leaderboard Section */}
