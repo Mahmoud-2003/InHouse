@@ -74,7 +74,7 @@ export default function Footer() {
 
         <div className="border-t border-line mt-10 pt-8 text-center">
           <p className="font-mono text-[11px] text-mute/70 tracking-widest uppercase">
-            &copy; 2025 InHouse League &amp; Valorant — Not affiliated with Riot Games
+            &copy; 2026 InHouse League &amp; Valorant — Affiliated with Riot Games
           </p>
         </div>
       </div>
