@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Gamepad2, Swords, Crosshair, ListOrdered, UserPlus } from 'lucide-react';
+import { Home, Gamepad2, Swords, Crosshair, ListOrdered, UserPlus, Handshake } from 'lucide-react';
 import { FaDiscord } from 'react-icons/fa';
 import logo from '../img/logo.gif';
 
@@ -14,6 +14,7 @@ const navItems = [
   { href: '/lol', label: 'League of Legends', icon: Swords },
   { href: '/valorant', label: 'Valorant', icon: Crosshair },
   { href: '/queue', label: 'Queue', icon: ListOrdered },
+  { href: '/partners', label: 'Partners', icon: Handshake },
   { href: '/contact', label: 'Join Us', icon: UserPlus },
 ];
 

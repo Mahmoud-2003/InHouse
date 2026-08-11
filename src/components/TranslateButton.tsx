@@ -9,6 +9,7 @@ const translations: Record<string, string> = {
   'InHouse': 'إنهاوس',
   'League & Valorant': 'ليج و فالورانت',
   'Queue': 'الطابور',
+  'Partners': 'الشركاء',
   'Join Us': 'انضم إلينا',
   'Discord': 'ديسكورد',
   'Facebook': 'فيسبوك',
@@ -240,6 +241,26 @@ const translations: Record<string, string> = {
   'Have questions? Need help? Our community moderators are always ready to assist you.':
     'لديك أسئلة؟ تحتاج مساعدة؟ مشرفو مجتمعنا مستعدون دائماً لمساعدتك.',
   'Join Discord Now': 'انضم إلى Discord الآن',
+
+  // PartnersPage
+  'Verified Partners': 'شركاء موثقون',
+  'Server Partners': 'شركاء السيرفر',
+  'Communities we work with to grow competitive League of Legends and Valorant across regions.':
+    'مجتمعات نتعاون معها لتنمية المنافسة في League of Legends و Valorant عبر مختلف المناطق.',
+  'Featured Partner': 'شريك مميز',
+  'Poropark': 'بوروبارك',
+  'Swedish League of Legends Community': 'مجتمع سويدي لِـ League of Legends',
+  "Poropark builds the infrastructure for Sweden's next generation of competitive League of Legends — running tournaments, leagues, and team management with less administrative friction than the pro circuit.":
+    'بوروبارك يبني البنية التحتية للجيل القادم من المنافسة في League of Legends بالسويد — عبر تنظيم البطولات والدوريات وإدارة الفرق بأقل قدر من التعقيد الإداري مقارنة بالدوريات الاحترافية.',
+  'What They Offer': 'ما الذي يقدمونه',
+  'Tournaments & Leagues': 'البطولات والدوريات',
+  'Team & Roster Management': 'إدارة الفرق والتشكيلات',
+  'Player Rankings & Hall of Fame': 'تصنيف اللاعبين وقاعة المشاهير',
+  'Looking-for-Group (LFG) Matching': 'مطابقة البحث عن فريق (LFG)',
+  '5 Verified Organizations': '5 منظمات موثقة',
+  '18 Teams': '18 فريقاً',
+  'Visit Poropark': 'زيارة بوروبارك',
+  'Join Poropark Discord': 'انضم إلى ديسكورد بوروبارك',
 };
 
 const IGNORED_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'IFRAME']);

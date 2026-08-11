@@ -13,6 +13,7 @@ const navItems = [
   { href: '/lol', label: 'League of Legends' },
   { href: '/valorant', label: 'Valorant' },
   { href: '/queue', label: 'Queue' },
+  { href: '/partners', label: 'Partners' },
   { href: '/contact', label: 'Join Us' },
 ];
 
