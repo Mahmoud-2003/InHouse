@@ -248,6 +248,8 @@ const translations: Record<string, string> = {
   'Rules & Requirements': 'القواعد والمتطلبات',
   'Prizes': 'الجوائز',
   'Register on Battlefy': 'التسجيل عبر Battlefy',
+  'View on Battlefy': 'عرض على Battlefy',
+  'Registration Closed': 'التسجيل مغلق',
 
   // PartnersPage
   'Verified Partners': 'شركاء موثقون',

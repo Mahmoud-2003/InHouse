@@ -1,4 +1,4 @@
-import { ArrowRight, Trophy, ClipboardList, Gift } from 'lucide-react';
+import { ArrowRight, Trophy, ClipboardList, Gift, Lock } from 'lucide-react';
 import { Reveal, RevealGroup, RevealItem } from '@/components/Reveal';
 import GlowButton from '@/components/GlowButton';
 import type { LocalizedText, Tournament } from '@/lib/content-types';
@@ -16,25 +16,46 @@ const accentStyles: Record<string, { badge: string; icon: string; bullet: string
 };
 
 export default function TournamentSection({ tournament }: { tournament: Tournament }) {
+  const closed = tournament.registrationClosed === true;
+
   return (
     <section className="py-20 relative z-10 bg-void">
       <div className="container mx-auto px-4">
         <Reveal>
-          <div className="hud-corners clip-card-lg border border-line bg-panel overflow-hidden">
+          <div
+            className={`hud-corners clip-card-lg border bg-panel overflow-hidden ${
+              closed ? 'border-line/60' : 'border-line'
+            }`}
+          >
             {tournament.bannerUrl && (
               <div className="relative w-full aspect-video">
                 <img
                   src={tournament.bannerUrl}
                   alt={`${tournament.name.en} tournament banner`}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={`absolute inset-0 w-full h-full object-cover transition-[filter] ${
+                    closed ? 'grayscale-[0.55] opacity-70' : ''
+                  }`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-panel via-transparent to-transparent" />
+                {closed && (
+                  <div className="absolute top-4 right-4 clip-tag border border-valred/50 bg-void/85 px-3 py-1.5 flex items-center gap-2">
+                    <Lock className="w-3 h-3 text-valred" />
+                    <span className="font-mono text-[10px] tracking-[0.25em] text-valred uppercase">
+                      Registration Closed
+                    </span>
+                  </div>
+                )}
               </div>
             )}
 
             <div className="p-6 sm:p-10">
               <p className="eyebrow mb-4">
-                <span className="live-dot" /> Tournament Announcement
+                {closed ? (
+                  <span className="w-1.5 h-1.5 rounded-full bg-mute/60 inline-block" />
+                ) : (
+                  <span className="live-dot" />
+                )}{' '}
+                Tournament Announcement
               </p>
               <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink uppercase mb-2">
                 {tournament.name.en}
@@ -75,16 +96,30 @@ export default function TournamentSection({ tournament }: { tournament: Tourname
               </RevealGroup>
 
               <div className="flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-line">
-                {tournament.meta.en && (
-                  <p className="font-mono text-xs tracking-[0.25em] text-mute/70 uppercase">
-                    {tournament.meta.en}
-                  </p>
-                )}
-                {tournament.battlefyUrl && (
-                  <GlowButton href={tournament.battlefyUrl} variant="volt">
-                    Register on Battlefy <ArrowRight className="w-4 h-4" />
-                  </GlowButton>
-                )}
+                <div className="flex flex-col gap-2">
+                  {closed && (
+                    <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-valred uppercase">
+                      <Lock className="w-3 h-3" /> Registration Closed
+                    </span>
+                  )}
+                  {tournament.meta.en && (
+                    <p className="font-mono text-xs tracking-[0.25em] text-mute/70 uppercase">
+                      {tournament.meta.en}
+                    </p>
+                  )}
+                </div>
+
+                {/* Still linked when closed: the bracket and results live there too. */}
+                {tournament.battlefyUrl &&
+                  (closed ? (
+                    <GlowButton href={tournament.battlefyUrl} variant="ghost">
+                      View on Battlefy <ArrowRight className="w-4 h-4" />
+                    </GlowButton>
+                  ) : (
+                    <GlowButton href={tournament.battlefyUrl} variant="volt">
+                      Register on Battlefy <ArrowRight className="w-4 h-4" />
+                    </GlowButton>
+                  ))}
               </div>
             </div>
           </div>

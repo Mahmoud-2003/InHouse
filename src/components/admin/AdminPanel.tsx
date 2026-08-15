@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { LogOut, Plus, RefreshCw, Save, Trash2 } from 'lucide-react';
+import { Lock, LogOut, Plus, RefreshCw, Save, Trash2, Unlock } from 'lucide-react';
 import type { Partner, SiteContent, Tournament } from '@/lib/content-types';
 import { LocalizedField, ListEditor, TextField } from './Field';
 
@@ -20,6 +20,7 @@ function newTournament(order: number): Tournament {
     meta: empty(),
     bannerUrl: '',
     battlefyUrl: '',
+    registrationClosed: false,
     format: [],
     rules: [],
     prizes: [],
@@ -245,6 +246,34 @@ export default function AdminPanel() {
               onDelete={() =>
                 edit({ ...content, tournaments: tournaments.filter((_, i) => i !== index) })
               }
+              extra={
+                <button
+                  onClick={() =>
+                    edit({
+                      ...content,
+                      tournaments: tournaments.map((t, i) =>
+                        i === index ? { ...t, registrationClosed: !t.registrationClosed } : t,
+                      ),
+                    })
+                  }
+                  title="Toggle whether registration is still open"
+                  className={`flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 border ${
+                    tournament.registrationClosed
+                      ? 'border-valred/40 text-valred'
+                      : 'border-volt/40 text-volt'
+                  }`}
+                >
+                  {tournament.registrationClosed ? (
+                    <>
+                      <Lock className="w-3 h-3" /> Reg Closed
+                    </>
+                  ) : (
+                    <>
+                      <Unlock className="w-3 h-3" /> Reg Open
+                    </>
+                  )}
+                </button>
+              }
             >
               <TournamentForm
                 tournament={tournament}
@@ -315,12 +344,14 @@ function ItemCard({
   visible,
   onToggleVisible,
   onDelete,
+  extra,
   children,
 }: {
   title: string;
   visible: boolean;
   onToggleVisible: () => void;
   onDelete: () => void;
+  extra?: React.ReactNode;
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -335,6 +366,8 @@ function ItemCard({
         >
           {open ? '▾' : '▸'} {title}
         </button>
+
+        {extra}
 
         <button
           onClick={onToggleVisible}

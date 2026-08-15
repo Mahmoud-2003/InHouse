@@ -14,6 +14,8 @@ export interface Tournament {
   meta: LocalizedText;
   bannerUrl: string;
   battlefyUrl: string;
+  /** Absent or false means registration is still open. */
+  registrationClosed?: boolean;
   format: LocalizedText[];
   rules: LocalizedText[];
   prizes: LocalizedText[];

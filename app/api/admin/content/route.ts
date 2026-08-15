@@ -38,6 +38,7 @@ function isTournament(value: unknown): value is Tournament {
     isLocalized(t.meta) &&
     typeof t.bannerUrl === 'string' &&
     typeof t.battlefyUrl === 'string' &&
+    (t.registrationClosed === undefined || typeof t.registrationClosed === 'boolean') &&
     isLocalizedArray(t.format) &&
     isLocalizedArray(t.rules) &&
     isLocalizedArray(t.prizes)
