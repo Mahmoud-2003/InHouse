@@ -1,0 +1,8 @@
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { sessionCookie } from '@/lib/auth';
+
+export async function POST() {
+  (await cookies()).set(sessionCookie.name, '', { ...sessionCookie.options, maxAge: 0 });
+  return NextResponse.json({ ok: true }, { headers: { 'X-Robots-Tag': 'noindex, nofollow' } });
+}

@@ -3,6 +3,7 @@ import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 import TranslateButton from '@/components/TranslateButton';
 import PageTransition from '@/components/PageTransition';
+import { buildDynamicDictionary } from '@/lib/content';
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -13,7 +14,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
-      <TranslateButton />
+      <TranslateButton extra={buildDynamicDictionary()} />
     </div>
   );
 }

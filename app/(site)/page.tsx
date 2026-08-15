@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import HomeContent from './HomeContent';
 import { SITE_URL } from '@/lib/site';
+import { visibleTournaments } from '@/lib/content';
 
 export const metadata: Metadata = {
   description:
@@ -25,7 +26,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
-      <HomeContent />
+      <HomeContent tournaments={visibleTournaments()} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const translations: Record<string, string> = {
@@ -242,6 +242,13 @@ const translations: Record<string, string> = {
     'لديك أسئلة؟ تحتاج مساعدة؟ مشرفو مجتمعنا مستعدون دائماً لمساعدتك.',
   'Join Discord Now': 'انضم إلى Discord الآن',
 
+  // TournamentSection (static labels; the content itself is admin-managed)
+  'Tournament Announcement': 'إعلان البطولة',
+  'Tournament Format': 'نظام البطولة',
+  'Rules & Requirements': 'القواعد والمتطلبات',
+  'Prizes': 'الجوائز',
+  'Register on Battlefy': 'التسجيل عبر Battlefy',
+
   // PartnersPage
   'Verified Partners': 'شركاء موثقون',
   'Server Partners': 'شركاء السيرفر',
@@ -269,24 +276,24 @@ const IGNORED_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'IFRAME']);
 // can revert precisely without assuming anything about sibling nodes.
 const originalByNode = new Map<Text, string>();
 
-function translateTextNode(node: Text) {
+function translateTextNode(node: Text, dict: Record<string, string>) {
   const text = node.textContent || '';
   const trimmed = text.trim();
-  if (!trimmed || !translations[trimmed] || originalByNode.has(node)) return;
+  if (!trimmed || !dict[trimmed] || originalByNode.has(node)) return;
 
   originalByNode.set(node, text);
   const leading = text.match(/^\s*/)?.[0] || '';
   const trailing = text.match(/\s*$/)?.[0] || '';
-  node.textContent = leading + translations[trimmed] + trailing;
+  node.textContent = leading + dict[trimmed] + trailing;
 }
 
-function walkAndTranslate(root: Node) {
+function walkAndTranslate(root: Node, dict: Record<string, string>) {
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
   let node: Text | null;
   while ((node = walker.nextNode() as Text | null)) {
     const parent = node.parentElement;
     if (parent && !IGNORED_TAGS.has(parent.tagName)) {
-      translateTextNode(node);
+      translateTextNode(node, dict);
     }
   }
 }
@@ -298,11 +305,11 @@ function revertAll() {
   originalByNode.clear();
 }
 
-function applyTranslation(enable: boolean) {
+function applyTranslation(enable: boolean, dict: Record<string, string>) {
   try {
     if (enable) {
       document.documentElement.dir = 'rtl';
-      walkAndTranslate(document.body);
+      walkAndTranslate(document.body, dict);
     } else {
       document.documentElement.dir = 'ltr';
       revertAll();
@@ -312,9 +319,15 @@ function applyTranslation(enable: boolean) {
   }
 }
 
-const TranslateButton: React.FC = () => {
+interface TranslateButtonProps {
+  /** Admin-managed English->Arabic pairs merged over the static dictionary. */
+  extra?: Record<string, string>;
+}
+
+const TranslateButton: React.FC<TranslateButtonProps> = ({ extra }) => {
   const [enabled, setEnabled] = useState(false);
   const observerRef = useRef<MutationObserver | null>(null);
+  const dict = useMemo(() => ({ ...translations, ...(extra ?? {}) }), [extra]);
 
   useEffect(() => {
     if (observerRef.current) {
@@ -322,12 +335,12 @@ const TranslateButton: React.FC = () => {
       observerRef.current = null;
     }
 
-    applyTranslation(enabled);
+    applyTranslation(enabled, dict);
 
     if (enabled) {
       const observer = new MutationObserver(() => {
         // Re-apply translation to any newly added DOM nodes (e.g. page navigation)
-        walkAndTranslate(document.body);
+        walkAndTranslate(document.body, dict);
       });
 
       observer.observe(document.body, {
@@ -344,7 +357,7 @@ const TranslateButton: React.FC = () => {
         observerRef.current = null;
       }
     };
-  }, [enabled]);
+  }, [enabled, dict]);
 
   return (
     <motion.div
