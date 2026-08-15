@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { sessionCookie, verifySessionToken } from '@/lib/auth';
 import { getContentFile, putContentFile } from '@/lib/github';
+import { CONTENT_TAG } from '@/lib/content';
 import type { LocalizedText, Partner, SiteContent, Tournament } from '@/lib/content-types';
 
 const NO_INDEX = { 'X-Robots-Tag': 'noindex, nofollow', 'Cache-Control': 'no-store' };
@@ -114,6 +116,14 @@ export async function PUT(request: Request) {
     if (!result.ok) {
       return NextResponse.json({ error: result.error }, { status: 502, headers: NO_INDEX });
     }
+
+    // Drop the cached copy so the public pages pick up this edit on their
+    // next request, instead of waiting for a rebuild. The tag purge clears the
+    // fetched data; the path purge regenerates the prerendered HTML that
+    // embedded it. The site layout also renders content (the Arabic
+    // dictionary), so revalidate from the layout down.
+    revalidateTag(CONTENT_TAG, { expire: 0 });
+    revalidatePath('/', 'layout');
 
     return NextResponse.json({ ok: true, sha: result.sha }, { headers: NO_INDEX });
   } catch (error) {

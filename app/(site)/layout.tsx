@@ -5,7 +5,7 @@ import TranslateButton from '@/components/TranslateButton';
 import PageTransition from '@/components/PageTransition';
 import { buildDynamicDictionary } from '@/lib/content';
 
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-void">
       <Sidebar />
@@ -14,7 +14,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
-      <TranslateButton extra={buildDynamicDictionary()} />
+      <TranslateButton extra={await buildDynamicDictionary()} />
     </div>
   );
 }

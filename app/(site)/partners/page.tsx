@@ -11,8 +11,8 @@ export const metadata: Metadata = {
     'Communities we work with to grow competitive League of Legends and Valorant across regions.',
 };
 
-export default function PartnersPage() {
-  const partners = visiblePartners();
+export default async function PartnersPage() {
+  const partners = await visiblePartners();
 
   return (
     <div className="min-h-screen bg-void">

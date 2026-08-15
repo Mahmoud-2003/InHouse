@@ -19,14 +19,14 @@ const organizationJsonLd = {
   sameAs: ['https://discord.gg/dCjJ6fFH4g'],
 };
 
-export default function Page() {
+export default async function Page() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
-      <HomeContent tournaments={visibleTournaments()} />
+      <HomeContent tournaments={await visibleTournaments()} />
     </>
   );
 }
