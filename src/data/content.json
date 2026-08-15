@@ -131,6 +131,28 @@
       "logoUrl": "/imgs/poropark-logo.png",
       "websiteUrl": "https://poropark.se/org",
       "discordUrl": "https://discord.gg/8Rqrmf5NMV"
+    },
+    {
+      "id": "partner-1786763627689",
+      "visible": true,
+      "order": 1,
+      "name": {
+        "en": "",
+        "ar": ""
+      },
+      "tagline": {
+        "en": "",
+        "ar": ""
+      },
+      "description": {
+        "en": "",
+        "ar": ""
+      },
+      "features": [],
+      "stats": [],
+      "logoUrl": "",
+      "websiteUrl": "",
+      "discordUrl": ""
     }
   ]
 }
