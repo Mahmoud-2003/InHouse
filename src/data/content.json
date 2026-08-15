@@ -3,7 +3,7 @@
   "tournaments": [
     {
       "id": "warriors-house-2026",
-      "visible": true,
+      "visible": false,
       "order": 0,
       "name": {
         "en": "Warriors' House",
@@ -24,12 +24,30 @@
       "bannerUrl": "/imgs/tournament.png",
       "battlefyUrl": "https://battlefy.com/league-of-inhouses/warriorshouse/6a7305db8d58e4001a5a00ea/info?infoTab=details",
       "format": [
-        { "en": "5v5 Teams", "ar": "فرق 5 ضد 5" },
-        { "en": "Single Elimination Bracket", "ar": "نظام الإقصاء المباشر" },
-        { "en": "Best of 1 (Bo1) matches", "ar": "مباريات بنظام Bo1" },
-        { "en": "Grand Final: Best of 3 (Bo3)", "ar": "النهائي الكبير: نظام Bo3" },
-        { "en": "Map: Summoner's Rift", "ar": "الخريطة: ساحة المستدعين" },
-        { "en": "Server: West", "ar": "السيرفر: الغربي" }
+        {
+          "en": "5v5 Teams",
+          "ar": "فرق 5 ضد 5"
+        },
+        {
+          "en": "Single Elimination Bracket",
+          "ar": "نظام الإقصاء المباشر"
+        },
+        {
+          "en": "Best of 1 (Bo1) matches",
+          "ar": "مباريات بنظام Bo1"
+        },
+        {
+          "en": "Grand Final: Best of 3 (Bo3)",
+          "ar": "النهائي الكبير: نظام Bo3"
+        },
+        {
+          "en": "Map: Summoner's Rift",
+          "ar": "الخريطة: ساحة المستدعين"
+        },
+        {
+          "en": "Server: West",
+          "ar": "السيرفر: الغربي"
+        }
       ],
       "rules": [
         {
@@ -54,8 +72,14 @@
           "en": "1st Place: 50 Chest & Key + Custom Role (Champion)",
           "ar": "المركز الأول: 50 صندوق ومفتاح + رتبة مخصصة (البطل)"
         },
-        { "en": "2nd Place: 30 Chest & Key", "ar": "المركز الثاني: 30 صندوق ومفتاح" },
-        { "en": "3rd Place: 20 Chest & Key", "ar": "المركز الثالث: 20 صندوق ومفتاح" }
+        {
+          "en": "2nd Place: 30 Chest & Key",
+          "ar": "المركز الثاني: 30 صندوق ومفتاح"
+        },
+        {
+          "en": "3rd Place: 20 Chest & Key",
+          "ar": "المركز الثالث: 20 صندوق ومفتاح"
+        }
       ]
     }
   ],
@@ -77,14 +101,32 @@
         "ar": "بوروبارك يبني البنية التحتية للجيل القادم من المنافسة في League of Legends بالسويد — عبر تنظيم البطولات والدوريات وإدارة الفرق بأقل قدر من التعقيد الإداري مقارنة بالدوريات الاحترافية."
       },
       "features": [
-        { "en": "Tournaments & Leagues", "ar": "البطولات والدوريات" },
-        { "en": "Team & Roster Management", "ar": "إدارة الفرق والتشكيلات" },
-        { "en": "Player Rankings & Hall of Fame", "ar": "تصنيف اللاعبين وقاعة المشاهير" },
-        { "en": "Looking-for-Group (LFG) Matching", "ar": "مطابقة البحث عن فريق (LFG)" }
+        {
+          "en": "Tournaments & Leagues",
+          "ar": "البطولات والدوريات"
+        },
+        {
+          "en": "Team & Roster Management",
+          "ar": "إدارة الفرق والتشكيلات"
+        },
+        {
+          "en": "Player Rankings & Hall of Fame",
+          "ar": "تصنيف اللاعبين وقاعة المشاهير"
+        },
+        {
+          "en": "Looking-for-Group (LFG) Matching",
+          "ar": "مطابقة البحث عن فريق (LFG)"
+        }
       ],
       "stats": [
-        { "en": "5 Verified Organizations", "ar": "5 منظمات موثقة" },
-        { "en": "18 Teams", "ar": "18 فريقاً" }
+        {
+          "en": "5 Verified Organizations",
+          "ar": "5 منظمات موثقة"
+        },
+        {
+          "en": "18 Teams",
+          "ar": "18 فريقاً"
+        }
       ],
       "logoUrl": "/imgs/poropark-logo.png",
       "websiteUrl": "https://poropark.se/org",
