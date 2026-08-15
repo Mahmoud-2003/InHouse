@@ -131,28 +131,6 @@
       "logoUrl": "/imgs/poropark-logo.png",
       "websiteUrl": "https://poropark.se/org",
       "discordUrl": "https://discord.gg/8Rqrmf5NMV"
-    },
-    {
-      "id": "partner-1786763627689",
-      "visible": true,
-      "order": 1,
-      "name": {
-        "en": "asdasd",
-        "ar": ""
-      },
-      "tagline": {
-        "en": "asdasd",
-        "ar": ""
-      },
-      "description": {
-        "en": "asdasdasdasd",
-        "ar": ""
-      },
-      "features": [],
-      "stats": [],
-      "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F699c61014699960071480ca2%2F1785872931647.png?alt=media&token=118449c9-f70f-488c-9410-93b9b5dade17",
-      "websiteUrl": "asdasdasd",
-      "discordUrl": "asdasdasdasd"
     }
   ]
 }
