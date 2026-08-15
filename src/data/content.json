@@ -3,7 +3,7 @@
   "tournaments": [
     {
       "id": "warriors-house-2026",
-      "visible": false,
+      "visible": true,
       "order": 0,
       "name": {
         "en": "Warriors' House",
