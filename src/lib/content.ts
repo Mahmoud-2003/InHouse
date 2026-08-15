@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { unstable_cache } from 'next/cache';
 import bundled from '@/data/content.json';
 import type { LocalizedText, Partner, SiteContent, Tournament } from './content-types';
@@ -124,4 +125,14 @@ export function collectDictionary(source: SiteContent): Record<string, string> {
 
 export async function buildDynamicDictionary(): Promise<Record<string, string>> {
   return collectDictionary(await getContent());
+}
+
+/**
+ * Short fingerprint of the current content. Open pages poll this to notice an
+ * edit and refresh themselves. It reads the same cached copy the pages use, so
+ * polling costs no extra GitHub requests.
+ */
+export async function getContentVersion(): Promise<string> {
+  const content = await getContent();
+  return createHash('sha1').update(JSON.stringify(content)).digest('hex').slice(0, 16);
 }

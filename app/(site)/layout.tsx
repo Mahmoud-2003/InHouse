@@ -3,7 +3,8 @@ import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 import TranslateButton from '@/components/TranslateButton';
 import PageTransition from '@/components/PageTransition';
-import { buildDynamicDictionary } from '@/lib/content';
+import LiveContentRefresh from '@/components/LiveContentRefresh';
+import { buildDynamicDictionary, getContentVersion } from '@/lib/content';
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,6 +16,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       </main>
       <Footer />
       <TranslateButton extra={await buildDynamicDictionary()} />
+      <LiveContentRefresh initialVersion={await getContentVersion()} />
     </div>
   );
 }
