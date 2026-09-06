@@ -132,6 +132,66 @@
       "logoUrl": "/imgs/poropark-logo.png",
       "websiteUrl": "https://poropark.se/org",
       "discordUrl": "https://discord.gg/8Rqrmf5NMV"
+    },
+    {
+      "id": "partner-1788690045873",
+      "visible": true,
+      "order": 1,
+      "name": {
+        "en": "Elobby",
+        "ar": "إيلوبي"
+      },
+      "tagline": {
+        "en": "Your server. Your ranks. Your ladder.",
+        "ar": "سيرفرك. رتبك. لوحة ترتيبك."
+      },
+      "description": {
+        "en": "Elobby turns your community’s games and events into a ranked league on Discord. Its Glicko-2-based performance rating system tracks player progress, balances teams and powers live leaderboards. Custom ranks, automatic Discord roles, match history and admin controls keep competition organised, while Pro adds structured seasons and recaps.",
+        "ar": "يحوّل إيلوبي ألعاب مجتمعك وفعالياته إلى دوري تنافسي مصنّف على ديسكورد. يعتمد نظام تقييم الأداء على Glicko-2 لتتبّع تطوّر اللاعبين وموازنة الفرق وتحديث لوحات الترتيب مباشرةً. وتساعد الرتب المخصّصة وأدوار ديسكورد التلقائية وسجل المباريات وأدوات الإدارة على تنظيم المنافسة، بينما تضيف خطة Pro مواسم منظّمة وملخّصات لأبرز أحداثها."
+      },
+      "features": [
+        {
+          "en": "Glicko-2 performance ratings, placement matches and custom ranks",
+          "ar": "تقييم أداء بنظام Glicko-2 مع مباريات تحديد المستوى ورتب مخصّصة"
+        },
+        {
+          "en": "Dynamic Game Board with player ratings, balanced teams and win probabilities",
+          "ar": "لوحة مباريات تفاعلية تعرض تقييمات اللاعبين والفرق المتوازنة واحتمالات الفوز"
+        },
+        {
+          "en": "Season Mode (Pro) with scheduling, rank resets, champions and recaps",
+          "ar": "نظام المواسم (Pro) مع الجدولة وإعادة ضبط الرتب والأبطال وملخّصات المواسم"
+        },
+        {
+          "en": "Supports video games, quizzes, server challenges and community events",
+          "ar": "دعم ألعاب الفيديو والمسابقات وتحدّيات السيرفر وفعاليات المجتمع"
+        },
+        {
+          "en": "Live leaderboards, player profiles and detailed match history",
+          "ar": "لوحات ترتيب مباشرة وملفات للاعبين وسجل مفصّل للمباريات"
+        },
+        {
+          "en": "Admin Dashboard for matches, teams, players and voice channels",
+          "ar": "لوحة إدارة للتحكّم بالمباريات والفرق واللاعبين والقنوات الصوتية"
+        }
+      ],
+      "stats": [
+        {
+          "en": "9 game and lobby presets",
+          "ar": "9 إعدادات مسبقة للألعاب واللوبي"
+        },
+        {
+          "en": "6 core features",
+          "ar": "6 ميزات أساسية"
+        },
+        {
+          "en": "5 default rank tiers",
+          "ar": "5 فئات رتب افتراضية"
+        }
+      ],
+      "logoUrl": "https://elobby.gg/logo.png",
+      "websiteUrl": "https://elobby.gg/",
+      "discordUrl": "https://discord.gg/MYP32H5aZ6"
     }
   ]
 }
